@@ -26,55 +26,39 @@ const Register = () => {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        alert(data.message);
-        return;
-      }
-
-      console.log("Created Account Successfully:", data);
-
-      
-      console.log("Token:", data.token);
+      console.log(data);
     } catch (error) {
-      console.error("Sign up error:", error);
-      alert("Something went wrong");
+      console.error("Registration error:", error);
     }
   };
 
   return (
     <div>
-      <h1>Register</h1>
+      <h1>Create Account</h1>
 
       <form onSubmit={handleRegister}>
-        <div>
-          <label>Name</label>
-          <input type="text" onChange={(e) => setName(e.target.value)}
-          placeholder="Enter your name"/>
-          </div>
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-          <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-          />
-        </div>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-          />
-        </div>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-        <button type="submit">
-          Sign Up
-        </button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );

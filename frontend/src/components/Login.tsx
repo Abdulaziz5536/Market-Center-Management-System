@@ -1,8 +1,10 @@
 import { useState } from "react";
+import "../styles.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,28 +27,29 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.message);
+        setMessage(data.error);
         return;
       }
-
+       
+      setMessage(data.message);
       console.log("Login successful:", data);
 
       
       console.log("Token:", data.token);
     } catch (error) {
       console.error("Login error:", error);
-      alert("Something went wrong");
+      setMessage(error)
     }
   };
 
   return (
-    <div>
+    <div className="login">
       <h1>Login</h1>
 
       <form onSubmit={handleLogin}>
         <div>
           <label>Email</label>
-          <input
+          <input id="login-eml-input"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -56,7 +59,7 @@ const Login = () => {
 
         <div>
           <label>Password</label>
-          <input
+          <input id="login-psw-input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -64,9 +67,10 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit">
+        <button id="login-button" type="submit">
           Login
         </button>
+        <h2>{message}</h2>
       </form>
     </div>
   );

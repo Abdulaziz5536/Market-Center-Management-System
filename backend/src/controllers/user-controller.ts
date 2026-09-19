@@ -3,6 +3,17 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user-model";
 
+export const getRegister = async (req: Request, res: Response) => {
+  try {
+    const email = await User.find();
+    res.json(email);
+
+    
+  } catch (error) {
+    return res.status(500).json("server error");
+  }
+}
+
 
 export const register = async (req: Request, res: Response) => {
   try {
