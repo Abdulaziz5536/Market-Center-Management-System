@@ -1,21 +1,23 @@
 import { useState } from "react";
 
-const Login = () => {
+const Register = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/login",
+        "http://localhost:5000/api/auth/register",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            name,
             email,
             password,
           }),
@@ -29,22 +31,28 @@ const Login = () => {
         return;
       }
 
-      console.log("Login successful:", data);
+      console.log("Created Account Successfully:", data);
 
       
       console.log("Token:", data.token);
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Sign up error:", error);
       alert("Something went wrong");
     }
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
 
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleRegister}>
         <div>
+          <label>Name</label>
+          <input type="text" onChange={(e) => setName(e.target.value)}
+          placeholder="Enter your name"/>
+          </div>
+
+          <div>
           <label>Email</label>
           <input
             type="email"
@@ -65,11 +73,11 @@ const Login = () => {
         </div>
 
         <button type="submit">
-          Login
+          Sign Up
         </button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;
