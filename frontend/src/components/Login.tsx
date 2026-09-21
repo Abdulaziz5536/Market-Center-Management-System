@@ -47,31 +47,35 @@ const Login = () => {
       <h1>Login</h1>
 
       <form onSubmit={handleLogin}>
-        <div>
-          <label>Email</label>
-          <input id="login-eml-input"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-          />
-        </div>
+  <div className="input-group">
+    <label htmlFor="login-eml-input">Email</label>
+    <input
+      id="login-eml-input"
+      type="email"
+      placeholder="Enter your email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+    />
+  </div>
 
-        <div>
-          <label>Password</label>
-          <input id="login-psw-input"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-          />
-        </div>
+  <div className="input-group">
+    <label htmlFor="login-psw-input">Password</label>
+    <input
+      id="login-psw-input"
+      type="password"
+      placeholder="Enter your password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+  </div>
 
-        <button id="login-button" type="submit">
-          Login
-        </button>
-        <h2>{message}</h2>
-      </form>
+  <button id="login-button" type="submit">
+    Login
+  </button>
+  <h3>don't have an account? <a href="/register">Create Account</a></h3>
+ 
+</form>
+ <h2>{message}</h2>
     </div>
   );
 };

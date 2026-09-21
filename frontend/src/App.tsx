@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Routes, Route } from "react-router-dom";
 import Login from './components/Login';
 import Register from './components/Register';
+import Dashboard from './components/Dashboard';
 
 function App() {
   
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />}/>
+      <Route path="/dashboard" element={<Dashboard />}/>
 
     </Routes>
 

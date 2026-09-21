@@ -33,32 +33,47 @@ const Register = () => {
   };
 
   return (
-    <div>
+        <div className="register">
       <h1>Create Account</h1>
 
       <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <div className="register-input-group">
+          <label htmlFor="register-name-input">Name</label>
+          <input
+            id="register-name-input"
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div className="register-input-group">
+          <label htmlFor="register-eml-input">Email</label>
+          <input
+            id="register-eml-input"
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="register-input-group">
+          <label htmlFor="register-psw-input">Password</label>
+          <input
+            id="register-psw-input"
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
-        <button type="submit">Register</button>
+        <button id="register-button" type="submit">
+          Register
+        </button>
+        <h3>already have an account? <a href="/login">sign in</a></h3>
       </form>
     </div>
   );
