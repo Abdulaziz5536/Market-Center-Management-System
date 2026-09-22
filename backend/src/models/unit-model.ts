@@ -17,7 +17,7 @@ const unitSchema = new Schema({
 
   status:{
     type:String,
-    enum:["Available", "Not Available"],
+    enum:["Available", "Occupied"],
     default:"Available"
   }
 

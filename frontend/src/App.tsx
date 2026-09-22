@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import Unit from './components/Unit';
 
 function App() {
   
@@ -15,6 +16,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />}/>
       <Route path="/dashboard" element={<Dashboard />}/>
+      <Route path="/units" element={<Unit />}/>
 
     </Routes>
 

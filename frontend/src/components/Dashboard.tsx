@@ -1,12 +1,18 @@
-
+import Sidebar from "../Sidebar"
 
 export default function Dashboard(){
   return(
 
-    <>
-    <h1>Dashboard</h1>
+    <div>
+
+    <Sidebar />
+
+       <h1>Dashboard</h1>
+
+    </div>
+   
     
-    </>
+    
 
 
   )
