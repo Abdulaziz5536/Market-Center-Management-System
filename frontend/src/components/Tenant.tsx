@@ -6,6 +6,13 @@ import "../styles.css";
 type Unit = {
   _id: string;
   unitId: string;
+  status: "Available" | "Occupied";
+};
+
+type TenantFile = {
+  name: string;
+  type: string;
+  data: string;
 };
 
 type Tenant = {
@@ -25,6 +32,8 @@ const Tenants = () => {
   const [email, setEmail] = useState("");
   const [unit, setUnit] = useState("");
   const [moveInDate, setMoveInDate] = useState("");
+  const [idLicenseFile, setIdLicenseFile] = useState<TenantFile | null>(null);
+  const [leaseAgreementFile, setLeaseAgreementFile] = useState<TenantFile | null>(null);
   const [message, setMessage] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -61,7 +70,41 @@ const Tenants = () => {
     setEmail("");
     setUnit("");
     setMoveInDate("");
+    setIdLicenseFile(null);
+    setLeaseAgreementFile(null);
     setEditingId(null);
+  };
+
+  const readFile = (file: File): Promise<TenantFile> => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve({ name: file.name, type: file.type, data: String(reader.result) });
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setFile: React.Dispatch<React.SetStateAction<TenantFile | null>>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      setFile(null);
+      return;
+    }
+    try {
+      setFile(await readFile(file));
+    } catch (error) {
+      console.error("Error reading file:", error);
+      setMessage("Unable to read the selected file");
+    }
+  };
+
+  const markUnitOccupied = async (unitId: string) => {
+    await fetch(`http://localhost:5000/units/${unitId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "Occupied" }),
+    });
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -72,14 +115,24 @@ const Tenants = () => {
         {
           method: editingId ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ tenantName, phone, email, unit, moveInDate }),
+          body: JSON.stringify({
+            tenantName,
+            phone,
+            email,
+            unit,
+            moveInDate,
+            ...(idLicenseFile && { idLicenseFile }),
+            ...(leaseAgreementFile && { leaseAgreementFile }),
+          }),
         },
       );
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
+      if (!editingId) await markUnitOccupied(unit);
       setMessage(data.message);
       clearForm();
       void getTenants();
+      void getUnits();
     } catch (error) {
       console.error("Error saving tenant:", error);
       setMessage("Unable to save tenant");
@@ -136,12 +189,28 @@ const Tenants = () => {
                   <label htmlFor="unit">Unit</label>
                   <select id="unit" value={unit} onChange={(event) => setUnit(event.target.value)} required>
                     <option value="">Select unit</option>
-                    {units.map((availableUnit) => <option key={availableUnit._id} value={availableUnit._id}>{availableUnit.unitId}</option>)}
+                    {units.map((availableUnit) => (
+                      <option
+                        key={availableUnit._id}
+                        value={availableUnit._id}
+                        disabled={availableUnit.status === "Occupied" && availableUnit._id !== unit}
+                      >
+                        {availableUnit.unitId}{availableUnit.status === "Occupied" ? " (Occupied)" : ""}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="unit-field">
                   <label htmlFor="move-in-date">Move-in Date</label>
                   <input id="move-in-date" type="date" value={moveInDate} onChange={(event) => setMoveInDate(event.target.value)} />
+                </div>
+                <div className="unit-field">
+                  <label htmlFor="id-license-file">ID / License File</label>
+                  <input id="id-license-file" type="file" onChange={(event) => void handleFileChange(event, setIdLicenseFile)} />
+                </div>
+                <div className="unit-field">
+                  <label htmlFor="lease-agreement-file">Lease Agreement File</label>
+                  <input id="lease-agreement-file" type="file" onChange={(event) => void handleFileChange(event, setLeaseAgreementFile)} />
                 </div>
               </div>
               <div className="unit-form-buttons">
