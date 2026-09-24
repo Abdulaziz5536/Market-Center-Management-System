@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import Contract from "../models/contract-model";
 import Tenant from "../models/tenant-model";
 
+
 const hasRequiredFields = (body: Record<string, unknown>) =>
   body.tenant && body.amount !== undefined && body.leaseStartDate && body.leaseEndDate && body.paymentFrequency;
 
