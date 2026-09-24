@@ -182,7 +182,7 @@ const Tenants = () => {
                   <input id="phone" type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="Enter phone number" required />
                 </div>
                 <div className="unit-field">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">Email`(optional)`</label>
                   <input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Enter email address" />
                 </div>
                 <div className="unit-field">
@@ -205,11 +205,11 @@ const Tenants = () => {
                   <input id="move-in-date" type="date" value={moveInDate} onChange={(event) => setMoveInDate(event.target.value)} />
                 </div>
                 <div className="unit-field">
-                  <label htmlFor="id-license-file">ID / License File</label>
+                  <label htmlFor="id-license-file">ID / License File `(optional)`</label>
                   <input id="id-license-file" type="file" onChange={(event) => void handleFileChange(event, setIdLicenseFile)} />
                 </div>
                 <div className="unit-field">
-                  <label htmlFor="lease-agreement-file">Lease Agreement File</label>
+                  <label htmlFor="lease-agreement-file">Lease Agreement File `(optional)`</label>
                   <input id="lease-agreement-file" type="file" onChange={(event) => void handleFileChange(event, setLeaseAgreementFile)} />
                 </div>
               </div>

@@ -4,7 +4,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
 
-      <h2>Market Center</h2>
+      <h2 style={{marginLeft:10}}>Market Center</h2>
 
       <nav>
 

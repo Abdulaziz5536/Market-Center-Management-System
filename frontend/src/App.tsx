@@ -5,6 +5,7 @@ import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import Unit from './components/Unit';
 import Tenant from './components/Tenant';
+import Contract from './components/Contract';
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />}/>
       <Route path="/units" element={<Unit />}/>
       <Route path="/tenants" element={<Tenant />}/>
+      <Route path="/contracts" element={<Contract />}/>
 
     </Routes>
 
