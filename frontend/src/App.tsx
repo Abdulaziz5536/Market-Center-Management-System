@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import Unit from './components/Unit';
 import Tenant from './components/Tenant';
 import Contract from './components/Contract';
+import Utility from './components/Utility';
 
 function App() {
   
@@ -21,6 +22,7 @@ function App() {
       <Route path="/units" element={<Unit />}/>
       <Route path="/tenants" element={<Tenant />}/>
       <Route path="/contracts" element={<Contract />}/>
+      <Route path="/utilities" element={<Utility />}/>
 
     </Routes>
 

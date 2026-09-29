@@ -7,6 +7,7 @@ import testRoute from "./routes/test-route";
 import unitRoute from "./routes/unit-route";
 import tenantRoute from "./routes/tenant-route";
 import contractRoute from "./routes/contract-route";
+import utilityRoute from "./routes/utility-route";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use("/test", testRoute);
 app.use("/units", unitRoute);
 app.use("/tenants", tenantRoute);
 app.use("/contracts", contractRoute);
+app.use("/utilities", utilityRoute);
 
 app.get("/", (req, res) => {
     res.json({
