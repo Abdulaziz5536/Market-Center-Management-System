@@ -392,7 +392,7 @@ const Units = () => {
                     <tr>
 
                       <td
-                        colSpan="6"
+                        colSpan={6}
                         className="no-units"
                       >
                         No units found
