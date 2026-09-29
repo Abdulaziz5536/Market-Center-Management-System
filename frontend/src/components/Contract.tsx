@@ -116,8 +116,7 @@ const Contracts = () => {
     setLeaseEndDate(contract.leaseEndDate);
     setPaymentFrequency(contract.paymentFrequency);
     setStatus(contract.status);
-    // List responses omit Base64 file data for speed. The server keeps the
-    // existing attachment unless the user selects a replacement file.
+    
     setContractFile(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -165,7 +164,19 @@ const Contracts = () => {
       <Sidebar />
       <main className="page-content">
         <div className="units-page contracts-page">
-          <h1 className="page-title">Contracts</h1>
+          <h1
+            className="page-title refresh-page-title"
+            role="button"
+            tabIndex={0}
+            title="Click to refresh contracts"
+            onClick={() => void loadData()}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                void loadData();
+              }
+            }}
+          >Contracts</h1>
           <section className="unit-form-card">
             <h2>{editingId ? "Edit Contract" : "Add Contract"}</h2>
             <form onSubmit={handleSubmit}>
@@ -180,7 +191,7 @@ const Contracts = () => {
                 <div className="unit-field"><label htmlFor="contract-amount">Amount (Br)</label><input id="contract-amount" type="number" min="0" step="0.01" placeholder="Amount (Br)" value={amount} onChange={(event) => setAmount(event.target.value)} required /></div>
                 <div className="unit-field"><label htmlFor="lease-start">Lease Start Date</label><input id="lease-start" type="date" value={leaseStartDate} onChange={(event) => setLeaseStartDate(event.target.value)} required /></div>
                 <div className="unit-field"><label htmlFor="lease-end">Lease End Date</label><input id="lease-end" type="date" value={leaseEndDate} onChange={(event) => setLeaseEndDate(event.target.value)} required /></div>
-                <div className="unit-field"><label htmlFor="frequency">Payment Frequency</label><select id="frequency" value={paymentFrequency} onChange={(event) => setPaymentFrequency(event.target.value)}><option>Monthly</option><option>Quarterly</option><option>Yearly</option></select></div>
+                <div className="unit-field"><label htmlFor="frequency">Payment Frequency</label><select id="frequency" value={paymentFrequency} onChange={(event) => setPaymentFrequency(event.target.value)}><option>Monthly</option><option>Quarterly (*3 months)</option><option>6 Months</option><option>Yearly</option></select></div>
                 <div className="unit-field"><label htmlFor="contract-status">Status</label><select id="contract-status" value={status} onChange={(event) => setStatus(event.target.value)}><option>Pending</option><option>Paid</option><option>Expired</option></select></div>
                 <div className="unit-field contract-file-field"><label htmlFor="contract-file">Contract Photo/PDF</label><input id="contract-file" type="file" accept="image/*,.pdf,application/pdf" onChange={(event) => void handleFileChange(event)} /></div>
               </div>

@@ -155,7 +155,7 @@ const Units = () => {
     }
   };
 
-  // CLEAR FORM
+  
   const clearForm = () => {
     setUnitId("");
     setArea("");
@@ -175,7 +175,19 @@ const Units = () => {
         <div className="units-page">
 
           
-          <h1 className="page-title">
+          <h1
+            className="page-title refresh-page-title"
+            role="button"
+            tabIndex={0}
+            title="Click to refresh units"
+            onClick={() => void getUnits()}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                void getUnits();
+              }
+            }}
+          >
             Units
           </h1>
 
@@ -251,7 +263,7 @@ const Units = () => {
                 <div className="unit-field">
 
                   <label htmlFor="monthly-rent">
-                    Monthly Rent
+                    Monthly Rent Amount (Br)
                   </label>
 
                   <input

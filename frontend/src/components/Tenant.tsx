@@ -168,7 +168,20 @@ const Tenants = () => {
       <Sidebar />
       <main className="page-content">
         <div className="units-page">
-          <h1 className="page-title">Tenants</h1>
+          <h1
+            className="page-title refresh-page-title"
+            role="button"
+            tabIndex={0}
+            title="Click to refresh tenants"
+            onClick={() => { void getTenants(); void getUnits(); }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                void getTenants();
+                void getUnits();
+              }
+            }}
+          >Tenants</h1>
           <section className="unit-form-card">
             <h2>{editingId ? "Edit Tenant" : "Add Tenant"}</h2>
             <form onSubmit={handleSubmit}>

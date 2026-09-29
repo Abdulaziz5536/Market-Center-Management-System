@@ -115,7 +115,19 @@ const Utilities = () => {
   const unitName = (utilityUnit: Utility["unit"]) => typeof utilityUnit === "string" ? utilityUnit : utilityUnit?.unitId ?? "—";
 
   return <div className="app-layout"><Sidebar /><main className="page-content"><div className="units-page contracts-page">
-    <h1 className="page-title">Utilities</h1>
+    <h1
+      className="page-title refresh-page-title"
+      role="button"
+      tabIndex={0}
+      title="Click to refresh utilities"
+      onClick={() => void loadData()}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          void loadData();
+        }
+      }}
+    >Utilities</h1>
     <section className="unit-form-card"><h2>{editingId ? "Edit Utility Bill" : "Add Utility Bill"}</h2><form onSubmit={handleSubmit}>
       <div className="contract-form-grid">
         <div className="unit-field"><label htmlFor="utility-unit">Unit</label><select id="utility-unit" value={unit} onChange={(event) => setUnit(event.target.value)} required><option value="">Select Unit</option>{units.map((availableUnit) => <option key={availableUnit._id} value={availableUnit._id}>{availableUnit.unitId}</option>)}</select></div>

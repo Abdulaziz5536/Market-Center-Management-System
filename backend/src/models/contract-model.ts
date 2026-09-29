@@ -32,7 +32,8 @@ const contractSchema = new Schema(
     paymentFrequency: {
       type: String,
       required: true,
-      enum: ["Monthly", "Quarterly", "Yearly"],
+      enum: ["Monthly", "Quarterly", "6 Months", "Yearly"],
+      default: "Monthly"
     },
     status: {
       type: String,
