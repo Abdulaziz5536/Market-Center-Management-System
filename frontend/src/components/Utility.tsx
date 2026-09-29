@@ -136,7 +136,7 @@ const Utilities = () => {
         <div className="unit-field"><label htmlFor="utility-amount">Amount (Br)</label><input id="utility-amount" type="number" min="0" step="0.01" value={amount} onChange={(event) => setAmount(event.target.value)} placeholder="Amount (Br)" required /></div>
         <div className="unit-field"><label htmlFor="due-date">Due Date</label><input id="due-date" type="date" value={dueDate} onChange={(event) => setDueDate(event.target.value)} required /></div>
         <div className="unit-field"><label htmlFor="utility-status">Status</label><select id="utility-status" value={status} onChange={(event) => setStatus(event.target.value)}><option>Pending</option><option>Paid</option><option>Overdue</option></select></div>
-        <div className="unit-field contract-file-field"><label htmlFor="receipt-file">Receipt Photo/PDF</label><input id="receipt-file" type="file" accept="image/*,.pdf,application/pdf" onChange={handleFileChange} /></div>
+        <div className="unit-field contract-file-field"><label htmlFor="receipt-file">Receipt Photo/PDF (optional)</label><input id="receipt-file" type="file" accept="image/*,.pdf,application/pdf" onChange={handleFileChange} /></div>
       </div>
       <div className="unit-form-buttons"><button type="submit" className="add-unit-button">{editingId ? "Update Utility Bill" : "Add Utility Bill"}</button>{editingId && <button type="button" className="cancel-unit-button" onClick={clearForm}>Cancel</button>}</div>
     </form></section>

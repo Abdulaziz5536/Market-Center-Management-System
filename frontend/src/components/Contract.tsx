@@ -193,7 +193,7 @@ const Contracts = () => {
                 <div className="unit-field"><label htmlFor="lease-end">Lease End Date</label><input id="lease-end" type="date" value={leaseEndDate} onChange={(event) => setLeaseEndDate(event.target.value)} required /></div>
                 <div className="unit-field"><label htmlFor="frequency">Payment Frequency</label><select id="frequency" value={paymentFrequency} onChange={(event) => setPaymentFrequency(event.target.value)}><option>Monthly</option><option>Quarterly (*3 months)</option><option>6 Months</option><option>Yearly</option></select></div>
                 <div className="unit-field"><label htmlFor="contract-status">Status</label><select id="contract-status" value={status} onChange={(event) => setStatus(event.target.value)}><option>Pending</option><option>Paid</option><option>Expired</option></select></div>
-                <div className="unit-field contract-file-field"><label htmlFor="contract-file">Contract Photo/PDF</label><input id="contract-file" type="file" accept="image/*,.pdf,application/pdf" onChange={(event) => void handleFileChange(event)} /></div>
+                <div className="unit-field contract-file-field"><label htmlFor="contract-file">Contract Photo/PDF (optional)</label><input id="contract-file" type="file" accept="image/*,.pdf,application/pdf" onChange={(event) => void handleFileChange(event)} /></div>
               </div>
               <div className="unit-form-buttons"><button type="submit" className="add-unit-button">{editingId ? "Update Contract" : "Add Contract"}</button>{editingId && <button type="button" className="cancel-unit-button" onClick={clearForm}>Cancel</button>}</div>
             </form>
