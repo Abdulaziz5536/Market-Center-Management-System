@@ -55,7 +55,7 @@ export const addUnit = async (req: Request, res: Response) => {
 
 export const getUnits = async (req: Request, res: Response) => {
   try {
-    const units = await Unit.find().sort({ unitId: 1 });
+    const units = await Unit.find().sort({ unitId: 1 }).lean();
 
     res.status(200).json({
       count: units.length,

@@ -4,7 +4,9 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
 
-      <h2 style={{marginLeft:10}}>Market Center</h2>
+      <NavLink to="/dashboard" className="sidebar-brand">
+        <h2>Market Center</h2>
+      </NavLink>
 
       <nav>
 

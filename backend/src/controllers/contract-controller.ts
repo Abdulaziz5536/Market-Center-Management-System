@@ -26,7 +26,11 @@ export const createContract = async (req: Request, res: Response) => {
 
 export const getContracts = async (_req: Request, res: Response) => {
   try {
-    const contracts = await Contract.find().populate("tenant").sort({ createdAt: -1 });
+    const contracts = await Contract.find()
+      .select({ "contractFile.data": 0 })
+      .populate("tenant")
+      .sort({ createdAt: -1 })
+      .lean();
     return res.status(200).json({ contracts });
   } catch (error) {
     console.error("Get contracts error:", error);
@@ -54,7 +58,9 @@ export const updateContract = async (req: Request, res: Response) => {
     const tenant = await Tenant.findById(req.body.tenant);
     if (!tenant) return res.status(404).json({ message: "Tenant not found" });
 
-    const contract = await Contract.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate("tenant");
+    const updateData = { ...req.body };
+    if (!updateData.contractFile?.data) delete updateData.contractFile;
+    const contract = await Contract.findByIdAndUpdate(req.params.id, updateData, { new: true }).populate("tenant");
     if (!contract) return res.status(404).json({ message: "Contract not found" });
     return res.status(200).json({ message: "Contract updated successfully", contract });
   } catch (error) {

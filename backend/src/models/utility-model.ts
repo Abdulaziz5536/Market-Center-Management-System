@@ -11,7 +11,7 @@ const utilitySchema = new Schema(
     utilityType: {
       type: String,
       required: true,
-      enum: ["Electricity", "Water", "Internet", "Gas", "Other"],
+      enum: ["Electricity", "Water", "Other"],
     },
     billingMonth: { type: String, required: true },
     amount: { type: Number, required: true, min: 0 },

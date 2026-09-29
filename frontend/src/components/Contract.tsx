@@ -116,7 +116,9 @@ const Contracts = () => {
     setLeaseEndDate(contract.leaseEndDate);
     setPaymentFrequency(contract.paymentFrequency);
     setStatus(contract.status);
-    setContractFile(contract.contractFile ?? null);
+    // List responses omit Base64 file data for speed. The server keeps the
+    // existing attachment unless the user selects a replacement file.
+    setContractFile(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -130,6 +132,20 @@ const Contracts = () => {
       void loadData();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to delete contract");
+    }
+  };
+
+  const downloadContractFile = async (id: string) => {
+    try {
+      const response = await fetch(`${API_URL}/contracts/${id}`);
+      const data = await response.json();
+      if (!response.ok || !data.contract?.contractFile?.data) throw new Error("File not found");
+      const link = document.createElement("a");
+      link.href = data.contract.contractFile.data;
+      link.download = data.contract.contractFile.name;
+      link.click();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Unable to download file");
     }
   };
 
@@ -178,7 +194,7 @@ const Contracts = () => {
             <div className="unit-table-wrapper">
               <table className="units-table">
                 <thead><tr><th>TENANT</th><th>AMOUNT</th><th>LEASE START</th><th>LEASE END</th><th>PAYMENT</th><th>STATUS</th><th>FILE</th><th>ACTIONS</th></tr></thead>
-                <tbody>{filteredContracts.length === 0 ? <tr><td colSpan={8} className="no-units">No contracts found</td></tr> : filteredContracts.map((contract) => <tr key={contract._id}><td>{tenantName(contract.tenant)}</td><td>Br {contract.amount}</td><td>{contract.leaseStartDate}</td><td>{contract.leaseEndDate}</td><td>{contract.paymentFrequency}</td><td><span className={`contract-status ${contract.status.toLowerCase()}`}>{contract.status}</span></td><td>{contract.contractFile ? <a href={contract.contractFile.data} download={contract.contractFile.name}>View file</a> : "—"}</td><td><div className="unit-actions"><button className="edit-button" onClick={() => handleEdit(contract)}>Edit</button><button className="delete-button" onClick={() => void handleDelete(contract._id)}>Delete</button></div></td></tr>)}</tbody>
+                <tbody>{filteredContracts.length === 0 ? <tr><td colSpan={8} className="no-units">No contracts found</td></tr> : filteredContracts.map((contract) => <tr key={contract._id}><td>{tenantName(contract.tenant)}</td><td>Br {contract.amount}</td><td>{contract.leaseStartDate}</td><td>{contract.leaseEndDate}</td><td>{contract.paymentFrequency}</td><td><span className={`contract-status ${contract.status.toLowerCase()}`}>{contract.status}</span></td><td>{contract.contractFile ? <button type="button" className="file-link-button" onClick={() => void downloadContractFile(contract._id)}>View file</button> : "—"}</td><td><div className="unit-actions"><button className="edit-button" onClick={() => handleEdit(contract)}>Edit</button><button className="delete-button" onClick={() => void handleDelete(contract._id)}>Delete</button></div></td></tr>)}</tbody>
               </table>
             </div>
           </section>

@@ -74,7 +74,9 @@ export const getTenants = async (
 ) => {
   try {
     const tenants = await Tenant.find()
-      .populate("unit");
+      .select({ "idLicenseFile.data": 0, "leaseAgreementFile.data": 0 })
+      .populate("unit")
+      .lean();
 
     res.status(200).json({
       tenants,
@@ -169,11 +171,11 @@ export const updateTenant = async (
     tenant.moveInDate = moveInDate || "";
     tenant.moveOutDate = moveOutDate || "";
 
-    if (idLicenseFile !== undefined) {
+    if (idLicenseFile?.data) {
       tenant.idLicenseFile = idLicenseFile;
     }
 
-    if (leaseAgreementFile !== undefined) {
+    if (leaseAgreementFile?.data) {
       tenant.leaseAgreementFile =
         leaseAgreementFile;
     }

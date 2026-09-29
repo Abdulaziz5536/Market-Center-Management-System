@@ -22,7 +22,11 @@ export const createUtility = async (req: Request, res: Response) => {
 
 export const getUtilities = async (_req: Request, res: Response) => {
   try {
-    const utilities = await Utility.find().populate("unit").sort({ billingMonth: -1, createdAt: -1 });
+    const utilities = await Utility.find()
+      .select({ "receiptFile.data": 0 })
+      .populate("unit")
+      .sort({ billingMonth: -1, createdAt: -1 })
+      .lean();
     return res.status(200).json({ utilities });
   } catch (error) {
     console.error("Get utilities error:", error);
@@ -48,7 +52,9 @@ export const updateUtility = async (req: Request, res: Response) => {
     }
     if (!await Unit.findById(req.body.unit)) return res.status(404).json({ message: "Unit not found" });
 
-    const utility = await Utility.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate("unit");
+    const updateData = { ...req.body };
+    if (!updateData.receiptFile?.data) delete updateData.receiptFile;
+    const utility = await Utility.findByIdAndUpdate(req.params.id, updateData, { new: true }).populate("unit");
     if (!utility) return res.status(404).json({ message: "Utility bill not found" });
     return res.status(200).json({ message: "Utility bill updated successfully", utility });
   } catch (error) {
