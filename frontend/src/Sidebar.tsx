@@ -58,12 +58,12 @@ const Sidebar = () => {
       
 
         <NavLink
-          to="/reports"
+          to="/announcement"
           className={({ isActive }) =>
             isActive ? "active" : ""
           }
         >
-          Reports
+          Announcement
         </NavLink>
 
         <NavLink

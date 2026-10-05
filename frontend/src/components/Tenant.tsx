@@ -218,11 +218,11 @@ const Tenants = () => {
                   <input id="move-in-date" type="date" value={moveInDate} onChange={(event) => setMoveInDate(event.target.value)} />
                 </div>
                 <div className="unit-field">
-                  <label htmlFor="id-license-file">ID / License File `(optional)`</label>
+                  <label htmlFor="id-license-file">ID / License File (optional)</label>
                   <input id="id-license-file" type="file" onChange={(event) => void handleFileChange(event, setIdLicenseFile)} />
                 </div>
                 <div className="unit-field">
-                  <label htmlFor="lease-agreement-file">Lease Agreement File `(optional)`</label>
+                  <label htmlFor="lease-agreement-file">Lease Agreement File (optional)</label>
                   <input id="lease-agreement-file" type="file" onChange={(event) => void handleFileChange(event, setLeaseAgreementFile)} />
                 </div>
               </div>

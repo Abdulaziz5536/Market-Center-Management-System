@@ -730,5 +730,38 @@ body{
 }
 
 
+.announcement-message-field {
+  margin-top: 22px;
+}
+
+.announcement-message-field textarea {
+  width: 100%;
+  padding: 14px 15px;
+  box-sizing: border-box;
+  border: 1px solid #ccd7e3;
+  border-radius: 7px;
+  background-color: white;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+}
+
+.announcement-message-field textarea:focus,
+.unit-field input:focus,
+.unit-field select:focus {
+  border-color: #8da9c4;
+}
+
+.announcement-preview {
+  max-width: 280px;
+  margin-top: 5px;
+  color: #64748b;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 

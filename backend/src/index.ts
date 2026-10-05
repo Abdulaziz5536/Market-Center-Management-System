@@ -8,6 +8,7 @@ import unitRoute from "./routes/unit-route";
 import tenantRoute from "./routes/tenant-route";
 import contractRoute from "./routes/contract-route";
 import utilityRoute from "./routes/utility-route";
+import announcementRoute from "./routes/announcement-route";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use("/units", unitRoute);
 app.use("/tenants", tenantRoute);
 app.use("/contracts", contractRoute);
 app.use("/utilities", utilityRoute);
+app.use("/announcement", announcementRoute);
 
 app.get("/", (req, res) => {
     res.json({
