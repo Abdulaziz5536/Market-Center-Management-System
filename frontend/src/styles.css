@@ -382,6 +382,25 @@ body{
 /* MESSAGE */
 /* ============================= */
 
+#message{
+
+  background-color: #ffe1e1;
+
+  color: #b42323;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
 .unit-message {
   margin-bottom: 20px;
 

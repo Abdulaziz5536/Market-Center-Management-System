@@ -4,13 +4,14 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/register",
+        "http://localhost:5000/auth/register",
         {
           method: "POST",
           headers: {
@@ -26,8 +27,18 @@ const Register = () => {
 
       const data = await response.json();
 
+      
+      if (!response.ok) {
+        setMessage(data.message);
+        return;
+      }
+
+      setMessage(data.message);
+      console.log("Account Created:", data);
+    
       console.log(data);
     } catch (error) {
+      setMessage("server error")
       console.error("Registration error:", error);
     }
   };
@@ -74,6 +85,7 @@ const Register = () => {
           Register
         </button>
         <h3>already have an account? <a href="/login">sign in</a></h3>
+        <h4 id="message">{message}</h4>
       </form>
     </div>
   );

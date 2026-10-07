@@ -11,7 +11,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/login",
+        "http://localhost:5000/auth/login",
         {
           method: "POST",
           headers: {
@@ -27,7 +27,7 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        setMessage(data.error);
+        setMessage(data.message);
         return;
       }
        
@@ -75,7 +75,7 @@ const Login = () => {
   <h3>don't have an account? <a href="/register">Create Account</a></h3>
  
 </form>
- <h2>{message}</h2>
+ <h2 id="message">{message}</h2>
     </div>
   );
 };
