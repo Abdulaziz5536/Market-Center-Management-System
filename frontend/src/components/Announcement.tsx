@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import Sidebar from "../Sidebar";
+import {isAdmin} from "../utils/auth";
 import "../styles.css";
 
 type Tenant = {
@@ -51,6 +52,9 @@ const announcementTypes = [
 ];
 
 const Announcements = () => {
+
+  const admin = isAdmin();
+
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [tenants, setTenants] = useState<Tenant[]>([]);
 
@@ -423,7 +427,7 @@ const Announcements = () => {
 
           
 
-          <div className="unit-form-card">
+          { admin && (<div className="unit-form-card">
             <form onSubmit={handleSubmit}>
               <div className="contract-form-grid">
                
@@ -661,7 +665,7 @@ const Announcements = () => {
               )}
 
               
-              <div className="unit-form-buttons">
+               <div className="unit-form-buttons">
                 <button
                   type="submit"
                   className="add-unit-button"
@@ -669,7 +673,7 @@ const Announcements = () => {
                   {editingId
                     ? "Update Announcement"
                     : "Create Announcement"}
-                </button>
+                </button> 
 
                 {editingId && (
                   <button
@@ -680,9 +684,9 @@ const Announcements = () => {
                     Cancel
                   </button>
                 )}
-              </div>
+              </div> 
             </form>
-          </div>
+          </div> )}
 
          
 
@@ -812,7 +816,7 @@ const Announcements = () => {
                          
                           <td>
                             <div className="unit-actions">
-                              <button
+                             { admin && ( <button
                                 type="button"
                                 className="edit-button"
                                 onClick={() =>
@@ -822,9 +826,9 @@ const Announcements = () => {
                                 }
                               >
                                 Edit
-                              </button>
+                              </button> )}
 
-                              <button
+                            {admin &&(  <button
                                 type="button"
                                 className="delete-button"
                                 onClick={() =>
@@ -834,7 +838,7 @@ const Announcements = () => {
                                 }
                               >
                                 Delete
-                              </button>
+                              </button> )}
                             </div>
                           </td>
                         </tr>

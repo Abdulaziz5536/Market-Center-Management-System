@@ -9,6 +9,7 @@ import Tenant from './components/Tenant';
 import Contract from './components/Contract';
 import Utility from './components/Utility';
 import Announcement from './components/Announcement';
+import Setting from './components/Setting';
 
 
 function App() {
@@ -28,15 +29,21 @@ function App() {
       
       <Route element={<ProtectedRoute />}> 
       <Route path="/dashboard" element={<Dashboard />}/>
-      </Route>
+      
 
-      <Route element={<ProtectedRoute adminOnly />}>
+      
       <Route path="/units" element={<Unit />}/>
       <Route path="/tenants" element={<Tenant />}/>
       <Route path="/contracts" element={<Contract />}/>
       <Route path="/utilities" element={<Utility />}/>
       <Route path="/announcement" element={<Announcement />}/>
 
+      </Route>
+
+      <Route element={<ProtectedRoute adminOnly />}>
+      
+      <Route path="/settings" element={<Setting />}/>
+      
       </Route>
 
       

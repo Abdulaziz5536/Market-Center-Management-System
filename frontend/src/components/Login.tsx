@@ -40,14 +40,15 @@ const Login = () => {
         return;
       }
 
-      // Save token
+      
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       console.log("Login successful:", data);
 
       setMessage("Login successful!");
 
-      // Go to dashboard
+      
       setTimeout(() => {
         navigate("/dashboard");
       }, 500);

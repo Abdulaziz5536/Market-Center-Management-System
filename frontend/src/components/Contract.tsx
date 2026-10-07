@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import Sidebar from "../Sidebar";
+import { isAdmin } from "../utils/auth";
 import "../styles.css";
 
 type Tenant = { _id: string; tenantName: string; phone: string };
@@ -18,6 +19,9 @@ type Contract = {
 const API_URL = "http://localhost:5000";
 
 const Contracts = () => {
+
+  const admin = isAdmin();
+  
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [tenant, setTenant] = useState("");
@@ -177,7 +181,8 @@ const Contracts = () => {
               }
             }}
           >Contracts</h1>
-          <section className="unit-form-card">
+
+          { admin && (<section className="unit-form-card">
             <h2>{editingId ? "Edit Contract" : "Add Contract"}</h2>
             <form onSubmit={handleSubmit}>
               <div className="contract-form-grid">
@@ -197,7 +202,7 @@ const Contracts = () => {
               </div>
               <div className="unit-form-buttons"><button type="submit" className="add-unit-button">{editingId ? "Update Contract" : "Add Contract"}</button>{editingId && <button type="button" className="cancel-unit-button" onClick={clearForm}>Cancel</button>}</div>
             </form>
-          </section>
+          </section> )}
           {message && <div className="unit-message">{message}</div>}
           <section className="contract-list-section">
             <h2>Contracts List</h2>

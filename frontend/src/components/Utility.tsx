@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import Sidebar from "../Sidebar";
+import { isAdmin } from "../utils/auth";
 import "../styles.css";
 
 type Unit = { _id: string; unitId: string };
@@ -18,6 +19,8 @@ type Utility = {
 const API_URL = "http://localhost:5000";
 
 const Utilities = () => {
+
+  const admin = isAdmin();
   const [utilities, setUtilities] = useState<Utility[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
   const [unit, setUnit] = useState("");
@@ -128,7 +131,8 @@ const Utilities = () => {
         }
       }}
     >Utilities</h1>
-    <section className="unit-form-card"><h2>{editingId ? "Edit Utility Bill" : "Add Utility Bill"}</h2><form onSubmit={handleSubmit}>
+    
+    { admin && (<section className="unit-form-card"><h2>{editingId ? "Edit Utility Bill" : "Add Utility Bill"}</h2><form onSubmit={handleSubmit}>
       <div className="contract-form-grid">
         <div className="unit-field"><label htmlFor="utility-unit">Unit</label><select id="utility-unit" value={unit} onChange={(event) => setUnit(event.target.value)} required><option value="">Select Unit</option>{units.map((availableUnit) => <option key={availableUnit._id} value={availableUnit._id}>{availableUnit.unitId}</option>)}</select></div>
         <div className="unit-field"><label htmlFor="utility-type">Utility Type</label><select id="utility-type" value={utilityType} onChange={(event) => setUtilityType(event.target.value)}><option>Electricity</option><option>Water</option><option>Other</option></select></div>
@@ -139,7 +143,7 @@ const Utilities = () => {
         <div className="unit-field contract-file-field"><label htmlFor="receipt-file">Receipt Photo/PDF (optional)</label><input id="receipt-file" type="file" accept="image/*,.pdf,application/pdf" onChange={handleFileChange} /></div>
       </div>
       <div className="unit-form-buttons"><button type="submit" className="add-unit-button">{editingId ? "Update Utility Bill" : "Add Utility Bill"}</button>{editingId && <button type="button" className="cancel-unit-button" onClick={clearForm}>Cancel</button>}</div>
-    </form></section>
+    </form></section> )}
     {message && <div className="unit-message">{message}</div>}
     <section className="contract-list-section"><h2>Utilities List</h2><input className="contract-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search utilities..." />
       <div className="unit-table-wrapper"><table className="units-table"><thead><tr><th>UNIT</th><th>TYPE</th><th>BILLING MONTH</th><th>AMOUNT</th><th>DUE DATE</th><th>STATUS</th><th>RECEIPT</th><th>ACTIONS</th></tr></thead><tbody>

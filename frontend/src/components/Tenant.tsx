@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
+import { isAdmin } from "../utils/auth";
 import "../styles.css";
 
 
@@ -25,6 +26,8 @@ type Tenant = {
 };
 
 const Tenants = () => {
+
+  const admin = isAdmin()
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
   const [tenantName, setTenantName] = useState("");
@@ -182,7 +185,8 @@ const Tenants = () => {
               }
             }}
           >Tenants</h1>
-          <section className="unit-form-card">
+
+          { admin &&(<section className="unit-form-card">
             <h2>{editingId ? "Edit Tenant" : "Add Tenant"}</h2>
             <form onSubmit={handleSubmit}>
               <div className="unit-form-row">
@@ -231,7 +235,7 @@ const Tenants = () => {
                 {editingId && <button type="button" className="cancel-unit-button" onClick={clearForm}>Cancel</button>}
               </div>
             </form>
-          </section>
+          </section> )}
           {message && <div className="unit-message">{message}</div>}
           <section className="unit-list-card">
             <h2>Tenants List</h2>

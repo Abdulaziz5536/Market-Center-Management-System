@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { isAdmin } from "./utils/auth";
 
 const Sidebar = () => {
+
+  const admin = isAdmin();
   return (
     <div className="sidebar">
 
@@ -66,14 +69,14 @@ const Sidebar = () => {
           Announcement
         </NavLink>
 
-        <NavLink
+       {admin && ( <NavLink
           to="/settings"
           className={({ isActive }) =>
             isActive ? "active" : ""
           }
         >
           Settings
-        </NavLink>
+        </NavLink> )}
 
         <NavLink
         style={{backgroundColor:"red"}}

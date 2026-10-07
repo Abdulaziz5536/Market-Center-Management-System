@@ -31,10 +31,7 @@ export const register = async (
 ) => {
   try {
     const {
-      name,
-      email,
-      password,
-    } = req.body;
+      name,email,password,accessLevel,} = req.body;
 
 
     if (!name || !email || !password) {
@@ -65,7 +62,7 @@ export const register = async (
       name,
       email,
       password: hashedPassword,
-      accessLevel: "readonly",
+      accessLevel:accessLevel === "admin" ? "admin" : "readonly",
     });
 
    

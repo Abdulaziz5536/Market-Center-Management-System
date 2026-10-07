@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
+import {isAdmin} from "../utils/auth";
 import "../styles.css";
 
 const Units = () => {
@@ -13,6 +14,8 @@ const Units = () => {
 
   const [message, setMessage] = useState("");
   const [editingId, setEditingId] = useState(null);
+
+  const admin = isAdmin();
 
  
   const getUnits = async () => {
@@ -310,14 +313,14 @@ const Units = () => {
               
               <div className="unit-form-buttons">
 
-                <button
+           {admin && (     <button
                   type="submit"
                   className="add-unit-button"
                 >
                   {editingId
                     ? "Update Unit"
                     : "Add Unit"}
-                </button>
+                </button> )}
 
                 {editingId && (
                   <button
@@ -438,27 +441,27 @@ const Units = () => {
 
                         <td>
 
-                          <div className="unit-actions">
+                         <div className="unit-actions">
 
-                            <button
+                            { admin && (<button
                               className="edit-button"
                               onClick={() =>
                                 handleEdit(unit)
                               }
                             >
                               Edit
-                            </button>
+                            </button> )}
 
-                            <button
+                        {admin && (    <button
                               className="delete-button"
                               onClick={() =>
                                 handleDelete(unit._id)
                               }
                             >
                               Delete
-                            </button>
+                            </button>  )}
 
-                          </div>
+                          </div> 
 
                         </td>
 

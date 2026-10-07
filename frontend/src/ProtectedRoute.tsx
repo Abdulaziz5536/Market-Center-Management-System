@@ -1,11 +1,25 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ adminOnly = false }) => {
-  const token = localStorage.getItem("token");
-  const userData = localStorage.getItem("user");
+type ProtectedRouteProps = {
+  adminOnly?: boolean;
+};
+
+const ProtectedRoute = ({
+  adminOnly = false,
+}: ProtectedRouteProps) => {
+  const token =
+    localStorage.getItem("token");
+
+  const userData =
+    localStorage.getItem("user");
 
   if (!token || !userData) {
-    return <Navigate to="/login" replace />;
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
   }
 
   let user;
@@ -16,12 +30,24 @@ const ProtectedRoute = ({ adminOnly = false }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
-    return <Navigate to="/login" replace />;
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
   }
 
-  
-  if (adminOnly && user.accessLevel !== "admin") {
-    return <Navigate to="/dashboard" replace />;
+  if (
+    adminOnly &&
+    user.accessLevel !== "admin"
+  ) {
+    return (
+      <Navigate
+        to="/dashboard"
+        replace
+      />
+    );
   }
 
   return <Outlet />;
