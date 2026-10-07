@@ -30,13 +30,17 @@ const announcementSchema = new Schema(
 
     audience: {
       type: String,
-      enum: [
-        "All Tenants",
-        "Specific Unit",
-        "All Staff",
-      ],
+      enum: ["All Tenants", "Specific Tenants"],
       required: true,
     },
+
+    // Used only when audience is "Specific Tenants"
+    targetTenants: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tenant",
+      },
+    ],
 
     scheduledDate: {
       type: Date,

@@ -1,7 +1,14 @@
-import {useEffect, useMemo, useState, type FormEvent,} from "react";
-
+import { useEffect, useMemo, useState } from "react";
+import type { FormEvent } from "react";
 import Sidebar from "../Sidebar";
 import "../styles.css";
+
+type Tenant = {
+  _id: string;
+  tenantName: string;
+  phone: string;
+  email?: string;
+};
 
 type Announcement = {
   _id: string;
@@ -14,21 +21,38 @@ type Announcement = {
     | "Utility"
     | "Contract"
     | "Other";
+
   message: string;
-  audience:
-    | "All Tenants"
-    | "Specific Unit"
-    | "All Staff";
+
+  audience: "All Tenants" | "Specific Tenants";
+
+  targetTenants:
+    | {
+        _id: string;
+        tenantName: string;
+        phone: string;
+        email?: string;
+      }[]
+    | string[];
+
   scheduledDate: string;
+
   deliveryType: "Email" | "SMS" | "Both";
 };
 
-const API_URL = "http://localhost:5000";
+const announcementTypes = [
+  "General",
+  "Maintenance",
+  "Emergency",
+  "Payment",
+  "Utility",
+  "Contract",
+  "Other",
+];
 
 const Announcements = () => {
-  const [announcements, setAnnouncements] = useState<
-    Announcement[]
-  >([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [tenants, setTenants] = useState<Tenant[]>([]);
 
   const [title, setTitle] = useState("");
   const [announcementType, setAnnouncementType] =
@@ -36,61 +60,102 @@ const Announcements = () => {
 
   const [message, setMessage] = useState("");
 
-  const [audience, setAudience] =
-    useState("All Tenants");
+  const [audience, setAudience] = useState<
+    "All Tenants" | "Specific Tenants"
+  >("All Tenants");
 
-  const [scheduledDate, setScheduledDate] =
-    useState("");
+  const [targetTenants, setTargetTenants] = useState<string[]>([]);
 
-  const [deliveryType, setDeliveryType] =
-    useState("Email");
+  const [scheduledDate, setScheduledDate] = useState("");
 
-  const [editingId, setEditingId] =
-    useState<string | null>(null);
+  const [deliveryType, setDeliveryType] = useState<
+    "Email" | "SMS" | "Both"
+  >("Email");
+
+  const [editingId, setEditingId] = useState<string | null>(
+    null
+  );
 
   const [search, setSearch] = useState("");
 
-  const [formMessage, setFormMessage] =
-    useState("");
+  const [formMessage, setFormMessage] = useState("");
 
-  const loadAnnouncements = async () => {
+  
+
+  const loadData = async () => {
     try {
-      const response = await fetch(
-        `${API_URL}/announcement`
-      );
+      const [announcementResponse, tenantResponse] =
+        await Promise.all([
+          fetch("http://localhost:5000/announcement"),
+          fetch("http://localhost:5000/tenants"),
+        ]);
 
-      const data = await response.json();
+      const announcementData =
+        await announcementResponse.json();
 
-      if (!response.ok) {
-        throw new Error(data.message);
+      const tenantData = await tenantResponse.json();
+
+      if (announcementResponse.ok) {
+        setAnnouncements(
+          announcementData.announcements || []
+        );
       }
 
-      setAnnouncements(data.announcements ?? []);
+      if (tenantResponse.ok) {
+        setTenants(tenantData.tenants || []);
+      }
     } catch (error) {
-      console.error(
-        "Error loading announcements:",
-        error
-      );
-
-      setFormMessage(
-        "Unable to load announcements"
-      );
+      console.error("Failed to load announcement data:", error);
     }
   };
 
   useEffect(() => {
-    void loadAnnouncements();
+    loadData();
   }, []);
+
+  
 
   const clearForm = () => {
     setTitle("");
     setAnnouncementType("General");
     setMessage("");
     setAudience("All Tenants");
+    setTargetTenants([]);
     setScheduledDate("");
     setDeliveryType("Email");
     setEditingId(null);
+    setFormMessage("");
   };
+
+  
+
+  const handleTenantSelection = (
+    tenantId: string
+  ) => {
+    setTargetTenants((current) => {
+      if (current.includes(tenantId)) {
+        return current.filter((id) => id !== tenantId);
+      }
+
+      return [...current, tenantId];
+    });
+  };
+
+ 
+
+  const selectAllTenants = () => {
+    setTargetTenants(
+      tenants.map((tenant) => tenant._id)
+    );
+  };
+
+  
+
+  const clearSelectedTenants = () => {
+    setTargetTenants([]);
+  };
+
+  
 
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
@@ -99,48 +164,74 @@ const Announcements = () => {
 
     setFormMessage("");
 
+    if (
+      audience === "Specific Tenants" &&
+      targetTenants.length === 0
+    ) {
+      setFormMessage(
+        "Please select at least one tenant."
+      );
+
+      return;
+    }
+
     const payload = {
       title,
       announcementType,
       message,
       audience,
+
+      targetTenants:
+        audience === "Specific Tenants"
+          ? targetTenants
+          : [],
+
       scheduledDate,
       deliveryType,
     };
 
     try {
-      const response = await fetch(
-        editingId
-          ? `${API_URL}/announcement/${editingId}`
-          : `${API_URL}/announcement`,
-        {
-          method: editingId ? "PUT" : "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const url = editingId
+        ? `http://localhost:5000/announcements/${editingId}`
+        : "http://localhost:5000/announcements";
+
+      const response = await fetch(url, {
+        method: editingId ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message);
+        setFormMessage(
+          data.message || "Something went wrong."
+        );
+
+        return;
       }
 
-      setFormMessage(data.message);
+      setFormMessage(
+        editingId
+          ? "Announcement updated successfully."
+          : "Announcement created successfully."
+      );
 
       clearForm();
 
-      await loadAnnouncements();
+      await loadData();
     } catch (error) {
+      console.error(error);
+
       setFormMessage(
-        error instanceof Error
-          ? error.message
-          : "Unable to save announcement"
+        "Unable to connect to the server."
       );
     }
   };
+
+ 
 
   const handleEdit = (
     announcement: Announcement
@@ -157,18 +248,47 @@ const Announcements = () => {
 
     setAudience(announcement.audience);
 
-    const date = new Date(
-      announcement.scheduledDate
-    );
+    
+    if (announcement.audience === "Specific Tenants") {
+      if (
+        Array.isArray(announcement.targetTenants)
+      ) {
+        const ids = announcement.targetTenants.map(
+          (tenant) =>
+            typeof tenant === "string"
+              ? tenant
+              : tenant._id
+        );
 
-    const formattedDate =
-      date.toISOString().slice(0, 16);
+        setTargetTenants(ids);
+      }
+    } else {
+      setTargetTenants([]);
+    }
 
-    setScheduledDate(formattedDate);
+    
+    if (announcement.scheduledDate) {
+      const date = new Date(
+        announcement.scheduledDate
+      );
+
+      const localDate = new Date(
+        date.getTime() -
+          date.getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .slice(0, 16);
+
+      setScheduledDate(localDate);
+    } else {
+      setScheduledDate("");
+    }
 
     setDeliveryType(
       announcement.deliveryType
     );
+
+    setFormMessage("");
 
     window.scrollTo({
       top: 0,
@@ -176,7 +296,11 @@ const Announcements = () => {
     });
   };
 
-  const handleDelete = async (id: string) => {
+  
+
+  const handleDelete = async (
+    id: string
+  ) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this announcement?"
     );
@@ -187,7 +311,7 @@ const Announcements = () => {
 
     try {
       const response = await fetch(
-        `${API_URL}/announcement/${id}`,
+        `http://localhost:5000/announcement/${id}`,
         {
           method: "DELETE",
         }
@@ -196,88 +320,117 @@ const Announcements = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message);
+        alert(
+          data.message ||
+            "Failed to delete announcement."
+        );
+
+        return;
       }
 
-      setFormMessage(data.message);
-
-      await loadAnnouncements();
+      await loadData();
     } catch (error) {
-      setFormMessage(
-        error instanceof Error
-          ? error.message
-          : "Unable to delete announcement"
+      console.error(error);
+
+      alert(
+        "Unable to connect to the server."
       );
     }
   };
 
-  const filteredAnnouncements = useMemo(() => {
-    return announcements.filter((announcement) => {
-      const searchText = `
-        ${announcement.title}
-        ${announcement.announcementType}
-        ${announcement.audience}
-        ${announcement.deliveryType}
-      `.toLowerCase();
+ 
 
-      return searchText.includes(
-        search.toLowerCase()
-      );
-    });
-  }, [announcements, search]);
+  const getTenantName = (
+    tenant:
+      | string
+      | {
+          _id: string;
+          tenantName: string;
+          phone: string;
+          email?: string;
+        }
+  ) => {
+    if (typeof tenant !== "string") {
+      return tenant.tenantName;
+    }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleString();
+    const foundTenant = tenants.find(
+      (item) => item._id === tenant
+    );
+
+    return foundTenant
+      ? foundTenant.tenantName
+      : "Unknown Tenant";
   };
+
+  // -----------------------------------------
+  // FILTER ANNOUNCEMENTS
+  // -----------------------------------------
+
+  const filteredAnnouncements = useMemo(() => {
+    const searchValue =
+      search.toLowerCase().trim();
+
+    if (!searchValue) {
+      return announcements;
+    }
+
+    return announcements.filter(
+      (announcement) => {
+        const tenantNames = Array.isArray(
+          announcement.targetTenants
+        )
+          ? announcement.targetTenants
+              .map((tenant) =>
+                getTenantName(tenant)
+              )
+              .join(" ")
+          : "";
+
+        return (
+          announcement.title
+            .toLowerCase()
+            .includes(searchValue) ||
+          announcement.announcementType
+            .toLowerCase()
+            .includes(searchValue) ||
+          announcement.message
+            .toLowerCase()
+            .includes(searchValue) ||
+          announcement.audience
+            .toLowerCase()
+            .includes(searchValue) ||
+          announcement.deliveryType
+            .toLowerCase()
+            .includes(searchValue) ||
+          tenantNames
+            .toLowerCase()
+            .includes(searchValue)
+        );
+      }
+    );
+  }, [announcements, search, tenants]);
 
   return (
     <div className="app-layout">
       <Sidebar />
 
       <main className="page-content">
-        <div className="units-page contracts-page">
-
-          <h1
-            className="page-title refresh-page-title"
-            role="button"
-            tabIndex={0}
-            title="Click to refresh announcements"
-            onClick={() => void loadAnnouncements()}
-            onKeyDown={(event) => {
-              if (
-                event.key === "Enter" ||
-                event.key === " "
-              ) {
-                event.preventDefault();
-                void loadAnnouncements();
-              }
-            }}
-          >
+        <div className="units-page">
+          <h1 className="page-title">
             Announcements
           </h1>
 
-         
+          
 
-          <section className="unit-form-card">
-            <h2>
-              {editingId
-                ? "Edit Announcement"
-                : "Add Announcement"}
-            </h2>
-
+          <div className="unit-form-card">
             <form onSubmit={handleSubmit}>
-
               <div className="contract-form-grid">
-
                
-
                 <div className="unit-field">
-                  <label htmlFor="announcement-title">
-                    Title
-                  </label>
+                  <label>Title</label>
 
                   <input
-                    id="announcement-title"
                     type="text"
                     value={title}
                     onChange={(event) =>
@@ -288,93 +441,73 @@ const Announcements = () => {
                   />
                 </div>
 
-                
-
+               
                 <div className="unit-field">
-                  <label htmlFor="announcement-type">
+                  <label>
                     Announcement Type
                   </label>
 
                   <select
-                    id="announcement-type"
                     value={announcementType}
                     onChange={(event) =>
                       setAnnouncementType(
                         event.target.value
                       )
                     }
-                    required
                   >
-                    <option value="General">
-                      General
-                    </option>
-
-                    <option value="Maintenance">
-                      Maintenance
-                    </option>
-
-                    <option value="Emergency">
-                      Emergency
-                    </option>
-
-                    <option value="Payment">
-                      Payment
-                    </option>
-
-                    <option value="Utility">
-                      Utility
-                    </option>
-
-                    <option value="Contract">
-                      Contract
-                    </option>
-
-                    <option value="Other">
-                      Other
-                    </option>
+                    {announcementTypes.map(
+                      (type) => (
+                        <option
+                          key={type}
+                          value={type}
+                        >
+                          {type}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
 
-                
-
+                {/* AUDIENCE */}
                 <div className="unit-field">
-                  <label htmlFor="announcement-audience">
+                  <label>
                     Audience
                   </label>
 
                   <select
-                    id="announcement-audience"
                     value={audience}
-                    onChange={(event) =>
-                      setAudience(
-                        event.target.value
-                      )
-                    }
-                    required
+                    onChange={(event) => {
+                      const value =
+                        event.target.value as
+                          | "All Tenants"
+                          | "Specific Tenants";
+
+                      setAudience(value);
+
+                      if (
+                        value === "All Tenants"
+                      ) {
+                        setTargetTenants([]);
+                      }
+                    }}
                   >
                     <option value="All Tenants">
                       All Tenants
                     </option>
 
-                    <option value="Specific Unit">
-                      Specific Unit
-                    </option>
-
-                    <option value="All Staff">
-                      All Staff
+                    <option value="Specific Tenants">
+                      Specific Tenants
                     </option>
                   </select>
                 </div>
 
                 
-
                 <div className="unit-field">
-                  <label htmlFor="scheduled-date">
+                  <label>
                     Scheduled Date
                   </label>
 
                   <input
-                    id="scheduled-date"
                     type="datetime-local"
                     value={scheduledDate}
                     onChange={(event) =>
@@ -387,21 +520,21 @@ const Announcements = () => {
                 </div>
 
                 
-
                 <div className="unit-field">
-                  <label htmlFor="delivery-type">
+                  <label>
                     Delivery Type
                   </label>
 
                   <select
-                    id="delivery-type"
                     value={deliveryType}
                     onChange={(event) =>
                       setDeliveryType(
-                        event.target.value
+                        event.target.value as
+                          | "Email"
+                          | "SMS"
+                          | "Both"
                       )
                     }
-                    required
                   >
                     <option value="Email">
                       Email
@@ -416,39 +549,126 @@ const Announcements = () => {
                     </option>
                   </select>
                 </div>
-
               </div>
 
               
 
-              <div
-                className="unit-field announcement-message-field"
-              >
-                <label htmlFor="announcement-message">
+              {audience ===
+                "Specific Tenants" && (
+                <div className="announcement-message-field">
+                  <label className="announcement-select-label">
+                    Select Tenants
+                  </label>
+
+                  <div className="announcement-tenant-actions">
+                    <button
+                      type="button"
+                      className="select-all-button"
+                      onClick={
+                        selectAllTenants
+                      }
+                    >
+                      Select All
+                    </button>
+
+                    <button
+                      type="button"
+                      className="clear-all-button"
+                      onClick={
+                        clearSelectedTenants
+                      }
+                    >
+                      Clear All
+                    </button>
+                  </div>
+
+                  <div className="announcement-tenant-list">
+                    {tenants.length === 0 ? (
+                      <p>
+                        No tenants available.
+                      </p>
+                    ) : (
+                      tenants.map(
+                        (tenant) => (
+                          <label
+                            key={tenant._id}
+                            className="announcement-tenant-item"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={targetTenants.includes(
+                                tenant._id
+                              )}
+                              onChange={() =>
+                                handleTenantSelection(
+                                  tenant._id
+                                )
+                              }
+                            />
+
+                            <div>
+                              <strong>
+                                {
+                                  tenant.tenantName
+                                }
+                              </strong>
+
+                              <span>
+                                {tenant.email ||
+                                  tenant.phone}
+                              </span>
+                            </div>
+                          </label>
+                        )
+                      )
+                    )}
+                  </div>
+
+                  <p className="announcement-selected-count">
+                    {targetTenants.length} tenant
+                    {targetTenants.length !== 1
+                      ? "s"
+                      : ""}{" "}
+                    selected
+                  </p>
+                </div>
+              )}
+
+              
+              <div className="announcement-message-field">
+                <label>
                   Message
                 </label>
 
                 <textarea
-                  id="announcement-message"
                   value={message}
                   onChange={(event) =>
-                    setMessage(event.target.value)
+                    setMessage(
+                      event.target.value
+                    )
                   }
-                  placeholder="Write your announcement..."
+                  placeholder="Write your announcement message..."
                   rows={6}
                   required
                 />
               </div>
 
-              <div className="unit-form-buttons">
+             
+              {formMessage && (
+                <p className="unit-message">
+                  {formMessage}
+                </p>
+              )}
 
+              
+              <div className="unit-form-buttons">
                 <button
                   type="submit"
                   className="add-unit-button"
                 >
                   {editingId
                     ? "Update Announcement"
-                    : "Add Announcement"}
+                    : "Create Announcement"}
                 </button>
 
                 {editingId && (
@@ -460,44 +680,35 @@ const Announcements = () => {
                     Cancel
                   </button>
                 )}
-
               </div>
-
             </form>
-          </section>
+          </div>
 
-          
+         
 
-          {formMessage && (
-            <div className="unit-message">
-              {formMessage}
+          <div className="unit-list-card">
+            <div className="contract-list-header">
+              <h2>Announcement List</h2>
+
+              <input
+                type="text"
+                className="contract-search"
+                placeholder="Search announcements..."
+                value={search}
+                onChange={(event) =>
+                  setSearch(event.target.value)
+                }
+              />
             </div>
-          )}
-
-          
-
-          <section className="contract-list-section">
-
-            <h2>Announcements List</h2>
-
-            <input
-              className="contract-search"
-              value={search}
-              onChange={(event) =>
-                setSearch(event.target.value)
-              }
-              placeholder="Search announcements..."
-            />
 
             <div className="unit-table-wrapper">
-
               <table className="units-table">
-
                 <thead>
                   <tr>
                     <th>TITLE</th>
                     <th>TYPE</th>
                     <th>AUDIENCE</th>
+                    <th>TENANTS</th>
                     <th>SCHEDULE</th>
                     <th>DELIVERY</th>
                     <th>ACTIONS</th>
@@ -505,62 +716,104 @@ const Announcements = () => {
                 </thead>
 
                 <tbody>
-
                   {filteredAnnouncements.length ===
                   0 ? (
                     <tr>
                       <td
-                        colSpan={6}
-                        className="no-units"
+                        colSpan={7}
+                        style={{
+                          textAlign: "center",
+                          padding: "30px",
+                        }}
                       >
-                        No announcements found
+                        No announcements found.
                       </td>
                     </tr>
                   ) : (
                     filteredAnnouncements.map(
                       (announcement) => (
                         <tr
-                          key={announcement._id}
+                          key={
+                            announcement._id
+                          }
                         >
-
+                         
                           <td>
                             <strong>
-                              {announcement.title}
+                              {
+                                announcement.title
+                              }
                             </strong>
 
                             <div className="announcement-preview">
-                              {announcement.message}
+                              {
+                                announcement.message
+                              }
                             </div>
                           </td>
 
+                          
                           <td>
-                            <span className="contract-status pending">
+                            <span className="contract-status">
                               {
                                 announcement.announcementType
                               }
                             </span>
                           </td>
 
+                          
                           <td>
-                            {announcement.audience}
+                            {
+                              announcement.audience
+                            }
                           </td>
 
+                          
                           <td>
-                            {formatDate(
-                              announcement.scheduledDate
+                            {announcement.audience ===
+                            "All Tenants" ? (
+                              "All Tenants"
+                            ) : (
+                              <div>
+                                {Array.isArray(
+                                  announcement.targetTenants
+                                )
+                                  ? announcement.targetTenants
+                                      .map(
+                                        (
+                                          tenant
+                                        ) =>
+                                          getTenantName(
+                                            tenant
+                                          )
+                                      )
+                                      .join(
+                                        ", "
+                                      )
+                                  : "No tenants"}
+                              </div>
                             )}
                           </td>
 
+                          
+                          <td>
+                            {new Date(
+                              announcement.scheduledDate
+                            ).toLocaleString()}
+                          </td>
+
+                          
                           <td>
                             {
                               announcement.deliveryType
                             }
                           </td>
 
+                         
                           <td>
                             <div className="unit-actions">
-
                               <button
+                                type="button"
                                 className="edit-button"
                                 onClick={() =>
                                   handleEdit(
@@ -572,32 +825,26 @@ const Announcements = () => {
                               </button>
 
                               <button
+                                type="button"
                                 className="delete-button"
                                 onClick={() =>
-                                  void handleDelete(
+                                  handleDelete(
                                     announcement._id
                                   )
                                 }
                               >
                                 Delete
                               </button>
-
                             </div>
                           </td>
-
                         </tr>
                       )
                     )
                   )}
-
                 </tbody>
-
               </table>
-
             </div>
-
-          </section>
-
+          </div>
         </div>
       </main>
     </div>
