@@ -1,13 +1,22 @@
+
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setMessage("");
+    setLoading(true);
 
     try {
       const response = await fetch(
@@ -27,57 +36,125 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        setMessage(data.message);
+        setMessage(data.message || "Invalid email or password");
         return;
       }
-       
-      setMessage(data.message);
+
+      // Save token
+      localStorage.setItem("token", data.token);
+
       console.log("Login successful:", data);
 
-      
-      console.log("Token:", data.token);
+      setMessage("Login successful!");
+
+      // Go to dashboard
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 500);
     } catch (error) {
       console.error("Login error:", error);
-      setMessage(error)
+      setMessage("Unable to connect to the server.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="login">
-      <h1>Login</h1>
+    <div className="auth-page">
+      <div className="auth-card">
 
-      <form onSubmit={handleLogin}>
-  <div className="input-group">
-    <label htmlFor="login-eml-input">Email</label>
-    <input
-      id="login-eml-input"
-      type="email"
-      placeholder="Enter your email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
-  </div>
+        <div className="auth-header">
+          <div className="auth-logo">
+            MC
+          </div>
 
-  <div className="input-group">
-    <label htmlFor="login-psw-input">Password</label>
-    <input
-      id="login-psw-input"
-      type="password"
-      placeholder="Enter your password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-    />
-  </div>
+          <h1>Welcome Back</h1>
 
-  <button id="login-button" type="submit">
-    Login
-  </button>
-  <h3>don't have an account? <a href="/register">Create Account</a></h3>
- 
-</form>
- <h2 id="message">{message}</h2>
+          <p>
+            Sign in to your management dashboard
+          </p>
+        </div>
+
+        <form onSubmit={handleLogin} className="auth-form">
+
+          <div className="auth-input-group">
+            <label htmlFor="login-eml-input">
+              Email Address
+            </label>
+
+            <input
+              id="login-eml-input"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="auth-input-group">
+            <div className="password-label">
+              <label htmlFor="login-psw-input">
+                Password
+              </label>
+            </div>
+
+            <div className="password-wrapper">
+              <input
+                id="login-psw-input"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+          </div>
+
+          <button
+            id="login-button"
+            className="auth-button"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
+
+          {message && (
+            <div
+              className={`auth-message ${
+                message === "Login successful!"
+                  ? "success"
+                  : "error"
+              }`}
+            >
+              {message}
+            </div>
+          )}
+        </form>
+
+        <div className="auth-footer">
+          <p>
+            Don't have an account?
+          </p>
+
+          <Link to="/register">
+            Create an account
+          </Link>
+        </div>
+
+      </div>
     </div>
   );
 };
 
 export default Login;
+
