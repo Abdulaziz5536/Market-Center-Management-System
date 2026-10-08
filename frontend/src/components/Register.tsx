@@ -63,9 +63,7 @@ const Register = () => {
       <div className="auth-card register-card">
 
         <div className="auth-header">
-          <div className="auth-logo">
-            MC
-          </div>
+          
 
           <h1>Create Account</h1>
 

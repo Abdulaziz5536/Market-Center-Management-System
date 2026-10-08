@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { use, useMemo, useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import {isAdmin} from "../utils/auth";
 import { apiFetch } from "../api";
@@ -166,6 +166,14 @@ const Units = () => {
     setEditingId(null);
   };
 
+    const filteredUnits = useMemo(() => {
+      const searchTerm = search.toLowerCase();
+      return units.filter((unit) => {
+        const name = typeof unit.unitId === "string" ? unit.unitId : unit.unitId?.type;
+        return name?.toLowerCase().includes(searchTerm);
+      });
+    }, [units, search]);
+
   return (
     <div className="app-layout">
 
@@ -191,8 +199,6 @@ const Units = () => {
           >
             Units
           </h1>
-
-           <input className="unit-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search units..." />
 
           
          {admin && ( <section className="unit-form-card">
@@ -352,6 +358,8 @@ const Units = () => {
               Units List
             </h2>
 
+            <input className="unit-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search units..." />
+
             <div className="unit-table-wrapper">
 
               <table className="units-table">
@@ -390,7 +398,7 @@ const Units = () => {
 
                 <tbody>
 
-                  {units.length === 0 ? (
+                  {filteredUnits.length === 0 ? (
 
                     <tr>
 
@@ -405,7 +413,7 @@ const Units = () => {
 
                   ) : (
 
-                    units.map((unit) => (
+                    filteredUnits.map((unit) => (
 
                       <tr key={unit._id}>
 
@@ -434,7 +442,7 @@ const Units = () => {
                                 : "status-badge occupied"
                             }
                           >
-                            {unit.status}
+                            {unit.status.toLowerCase()}
                           </span>
 
                         </td>

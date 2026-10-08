@@ -65,9 +65,7 @@ const Login = () => {
       <div className="auth-card">
 
         <div className="auth-header">
-          <div className="auth-logo">
-            MC
-          </div>
+          
 
           <h1>Welcome Back</h1>
 

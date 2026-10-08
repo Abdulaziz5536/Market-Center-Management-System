@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo, useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import { isAdmin } from "../utils/auth";
 import "../styles.css";
@@ -167,6 +167,14 @@ const Tenants = () => {
     }
   };
 
+  const filteredTenants = useMemo(() => {
+        const searchTerm = search.toLowerCase();
+        return tenants.filter((tenant) => {
+          const name = typeof tenant.tenantName === "string" ? tenant.tenantName : tenant.tenantName?.unit;
+          return name?.toLowerCase().includes(searchTerm);
+        });
+      }, [tenants, search]);
+
   return (
     <div className="app-layout">
       <Sidebar />
@@ -186,8 +194,6 @@ const Tenants = () => {
               }
             }}
           >Tenants</h1>
-
-          <input className="tenant-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search tenants..." />
 
           { admin &&(<section className="unit-form-card">
             <h2>{editingId ? "Edit Tenant" : "Add Tenant"}</h2>
@@ -234,7 +240,7 @@ const Tenants = () => {
                 </div>
               </div>
               <div className="unit-form-buttons">
-               && ( <button type="submit" className="add-unit-button">{editingId ? "Update Tenant" : "Add Tenant"}</button> 
+                <button type="submit" className="add-unit-button">{editingId ? "Update Tenant" : "Add Tenant"}</button> 
                 {editingId && <button type="button" className="cancel-unit-button" onClick={clearForm}>Cancel</button>} 
               </div>
             </form>
@@ -242,14 +248,16 @@ const Tenants = () => {
           {message && <div className="unit-message">{message}</div>}
           <section className="unit-list-card">
             <h2>Tenants List</h2>
+
+            <input className="tenant-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search tenants..." />
             
             <div className="unit-table-wrapper">
               <table className="units-table">
                 <thead><tr><th>TENANT NAME</th><th>PHONE</th><th>EMAIL</th><th>UNIT</th><th>MOVE-IN DATE</th><th>ACTIONS</th></tr></thead>
                 <tbody>
-                  {tenants.length === 0 ? (
+                  {filteredTenants.length === 0 ? (
                     <tr><td colSpan={6} className="no-units">No tenants found</td></tr>
-                  ) : tenants.map((tenant) => (
+                  ) : filteredTenants.map((tenant) => (
                     <tr key={tenant._id}>
                       <td>{tenant.tenantName}</td><td>{tenant.phone}</td><td>{tenant.email || "—"}</td>
                       <td>{typeof tenant.unit === "string" ? tenant.unit : tenant.unit?.unitId || "—"}</td><td>{tenant.moveInDate || "—"}</td>
