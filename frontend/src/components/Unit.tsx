@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import {isAdmin} from "../utils/auth";
+import { apiFetch } from "../api";
 import "../styles.css";
 
 const Units = () => {
@@ -20,9 +21,7 @@ const Units = () => {
  
   const getUnits = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:5000/units"
-      );
+      const response = await apiFetch("/units");
 
       const data = await response.json();
 
@@ -61,8 +60,7 @@ const Units = () => {
 
      
       if (editingId) {
-        response = await fetch(
-          `http://localhost:5000/units/${editingId}`,
+        response = await apiFetch(`/units/${editingId}`,
           {
             method: "PUT",
             headers: {
@@ -75,8 +73,7 @@ const Units = () => {
 
       
       else {
-        response = await fetch(
-          "http://localhost:5000/units",
+        response = await apiFetch("/units",
           {
             method: "POST",
             headers: {
@@ -134,8 +131,8 @@ const Units = () => {
     }
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/units/${id}`,
+      const response = await apiFetch(
+        `/units/${id}`,
         {
           method: "DELETE",
         }
@@ -195,7 +192,7 @@ const Units = () => {
           </h1>
 
           
-          <section className="unit-form-card">
+         {admin && ( <section className="unit-form-card">
 
             <h2>
               {editingId ? "Edit Unit" : "Add Unit"}
@@ -336,7 +333,7 @@ const Units = () => {
 
             </form>
 
-          </section>
+          </section> )}
 
           
           {message && (

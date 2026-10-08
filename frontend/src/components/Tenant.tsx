@@ -231,8 +231,8 @@ const Tenants = () => {
                 </div>
               </div>
               <div className="unit-form-buttons">
-                <button type="submit" className="add-unit-button">{editingId ? "Update Tenant" : "Add Tenant"}</button>
-                {editingId && <button type="button" className="cancel-unit-button" onClick={clearForm}>Cancel</button>}
+               && ( <button type="submit" className="add-unit-button">{editingId ? "Update Tenant" : "Add Tenant"}</button> 
+                {editingId && <button type="button" className="cancel-unit-button" onClick={clearForm}>Cancel</button>} 
               </div>
             </form>
           </section> )}
@@ -249,7 +249,7 @@ const Tenants = () => {
                     <tr key={tenant._id}>
                       <td>{tenant.tenantName}</td><td>{tenant.phone}</td><td>{tenant.email || "—"}</td>
                       <td>{typeof tenant.unit === "string" ? tenant.unit : tenant.unit?.unitId || "—"}</td><td>{tenant.moveInDate || "—"}</td>
-                      <td><div className="unit-actions"><button className="edit-button" onClick={() => handleEdit(tenant)}>Edit</button><button className="delete-button" onClick={() => void handleDelete(tenant._id)}>Delete</button></div></td>
+                      <td><div className="unit-actions"> {admin && (<button className="edit-button" onClick={() => handleEdit(tenant)}>Edit</button> )} {admin && (<button className="delete-button" onClick={() => void handleDelete(tenant._id)}>Delete</button> )}</div></td> 
                     </tr>
                   ))}
                 </tbody>

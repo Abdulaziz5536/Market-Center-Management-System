@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import Sidebar from "../Sidebar";
 import {isAdmin} from "../utils/auth";
+import { apiFetch } from "../api";
 import "../styles.css";
 
 type Tenant = {
@@ -90,8 +91,8 @@ const Announcements = () => {
     try {
       const [announcementResponse, tenantResponse] =
         await Promise.all([
-          fetch("http://localhost:5000/announcement"),
-          fetch("http://localhost:5000/tenants"),
+          apiFetch("/announcement"),
+          apiFetch("/tenants"),
         ]);
 
       const announcementData =
@@ -367,9 +368,7 @@ const Announcements = () => {
       : "Unknown Tenant";
   };
 
-  // -----------------------------------------
-  // FILTER ANNOUNCEMENTS
-  // -----------------------------------------
+ 
 
   const filteredAnnouncements = useMemo(() => {
     const searchValue =
@@ -472,7 +471,7 @@ const Announcements = () => {
                   </select>
                 </div>
 
-                {/* AUDIENCE */}
+               
                 <div className="unit-field">
                   <label>
                     Audience

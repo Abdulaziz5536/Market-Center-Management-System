@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
 import userRoute from "./routes/user-routes";
-import testRoute from "./routes/test-route";
 import unitRoute from "./routes/unit-route";
 import tenantRoute from "./routes/tenant-route";
 import contractRoute from "./routes/contract-route";
@@ -19,7 +18,6 @@ app.use(express.json({ limit: "20mb" }));
 connectDB();
 
 app.use("/auth", userRoute);
-app.use("/test", testRoute);
 app.use("/units", unitRoute);
 app.use("/tenants", tenantRoute);
 app.use("/contracts", contractRoute);
