@@ -39,6 +39,7 @@ const Tenants = () => {
   const [leaseAgreementFile, setLeaseAgreementFile] = useState<TenantFile | null>(null);
   const [message, setMessage] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
 
   const getTenants = async () => {
     try {
@@ -186,6 +187,8 @@ const Tenants = () => {
             }}
           >Tenants</h1>
 
+          <input className="tenant-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search tenants..." />
+
           { admin &&(<section className="unit-form-card">
             <h2>{editingId ? "Edit Tenant" : "Add Tenant"}</h2>
             <form onSubmit={handleSubmit}>
@@ -239,6 +242,7 @@ const Tenants = () => {
           {message && <div className="unit-message">{message}</div>}
           <section className="unit-list-card">
             <h2>Tenants List</h2>
+            
             <div className="unit-table-wrapper">
               <table className="units-table">
                 <thead><tr><th>TENANT NAME</th><th>PHONE</th><th>EMAIL</th><th>UNIT</th><th>MOVE-IN DATE</th><th>ACTIONS</th></tr></thead>

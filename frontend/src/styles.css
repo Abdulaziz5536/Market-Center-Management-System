@@ -912,6 +912,18 @@ body{
 /* UNIT LIST CARD */
 /* ============================= */
 
+.unit-search {
+  width: min(375px, 100%);
+  height: 50px;
+  margin-bottom: 40px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccd7e3;
+  border-radius: 7px;
+  font-size: 15px;
+  outline: none;
+}
+
 .unit-list-card {
   background-color: white;
 
@@ -1279,6 +1291,19 @@ body{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.tenant-search {
+  width: min(375px, 100%);
+  height: 50px;
+  margin-bottom: 40px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccd7e3;
+  border-radius: 7px;
+  font-size: 15px;
+  outline: none;
+}
+
 
 
 

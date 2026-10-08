@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import {isAdmin} from "../utils/auth";
 import { apiFetch } from "../api";
@@ -12,6 +12,7 @@ const Units = () => {
   const [type, setType] = useState("");
   const [monthlyRent, setMonthlyRent] = useState("");
   const [status, setStatus] = useState("Available");
+  const [search, setSearch] = useState("");
 
   const [message, setMessage] = useState("");
   const [editingId, setEditingId] = useState(null);
@@ -190,6 +191,8 @@ const Units = () => {
           >
             Units
           </h1>
+
+           <input className="unit-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search units..." />
 
           
          {admin && ( <section className="unit-form-card">
