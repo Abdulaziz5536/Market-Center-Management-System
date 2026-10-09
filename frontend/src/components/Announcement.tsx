@@ -450,21 +450,11 @@ const Announcements = () => {
                     Announcement Type
                   </label>
 
-                  <select
-                    value={announcementType}
-                    onChange={(event) =>
-                      setAnnouncementType(
-                        event.target.value
-                      )
-                    }
-                  >
-                    {announcementTypes.map(
-                      (type) => (
+                  <select value={announcementType} onChange={(event) => setAnnouncementType(event.target.value)}>
+                    {announcementTypes.map((type) => (
                         <option
                           key={type}
-                          value={type}
-                        >
-                          {type}
+                          value={type} > {type}
                         </option>
                       )
                     )}
@@ -477,13 +467,7 @@ const Announcements = () => {
                     Audience
                   </label>
 
-                  <select
-                    value={audience}
-                    onChange={(event) => {
-                      const value =
-                        event.target.value as
-                          | "All Tenants"
-                          | "Specific Tenants";
+                  <select value={audience} onChange={(event) => { const value = event.target.value as | "All Tenants" | "Specific Tenants";
 
                       setAudience(value);
 
@@ -539,12 +523,13 @@ const Announcements = () => {
                       )
                     }
                   >
-                    <option value="Email">
-                      Email
-                    </option>
 
                     <option value="SMS">
                       SMS
+                    </option>
+
+                    <option value="Email">
+                      Email
                     </option>
 
                     <option value="Both">

@@ -65,7 +65,7 @@ const Register = () => {
         <div className="auth-header">
           
 
-          <h1>Create Account</h1>
+          <h1 style={{display:"flex",justifyContent:"center"}}>Create Account</h1>
 
           <p>
             Create your management system account

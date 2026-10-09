@@ -495,9 +495,9 @@ body{
 
   border-radius: 9px;
 
-  background: #1d3557;
+  background: rgb(4, 16, 28);
 
-  color: #ffffff;
+  color: #d6e2eb;
 
   font-size: 14px;
 
@@ -512,7 +512,8 @@ body{
 }
 
 .auth-button:hover {
-  background: #27466f;
+  background: #0f2e4e;
+  color: white;
 
   box-shadow:
     0 7px 18px rgba(29, 53, 87, 0.18);
@@ -609,9 +610,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    RESPONSIVE
-========================================= */
+*/
 
 @media (max-width: 500px) {
   .auth-page {
@@ -665,13 +666,15 @@ body{
 .sidebar-brand h2 {
   margin: 0;
   margin-left: 5px;
-  font-size: 28px;
+  font-family:fantasy;
+  font-size: 32px;
   font-weight: bold;
   line-height: 1.5;
   white-space: nowrap;
+
 }
 
-/* Let navigation occupy the available height */
+
 .sidebar-nav {
   display: flex;
   flex-direction: column;
@@ -681,7 +684,7 @@ body{
   
 }
 
-/* Spread the main navigation items vertically */
+
 .sidebar-main-links {
   display: flex;
   flex-direction: column;
@@ -690,7 +693,7 @@ body{
   gap: 8px;
 }
 
-/* Navigation link appearance */
+
 .sidebar-nav a {
   display: flex;
   align-items: center;
@@ -720,7 +723,7 @@ body{
   box-shadow: inset 3px 0 0 #75c7f0;
 }
 
-/* Settings and logout stay near the bottom */
+
 .sidebar-bottom-links {
   display: flex;
   flex-direction: column;
@@ -730,7 +733,7 @@ body{
   border-top: 1px solid rgba(255, 255, 255, 0.13);
 }
 
-/* Styled logout button */
+
 .sidebar-logout {
   display: flex;
   align-items: center;
@@ -762,7 +765,7 @@ body{
   line-height: 1;
 }
 
-/* Offset page content because the sidebar is fixed */
+
 .page-content {
   flex: 1;
   min-width: 0;
@@ -772,7 +775,7 @@ body{
   background-color: #f5f8fc;
 }
 
-/* Keep the layout usable on smaller screens */
+
 @media (max-width: 768px) {
   .sidebar {
     width: 180px;
@@ -801,9 +804,9 @@ body{
   box-sizing: border-box;
 }
 
-/* ============================= */
+
 /* MAIN PAGE */
-/* ============================= */
+
 
 .units-page {
   width: 100%;
@@ -833,9 +836,9 @@ body{
 }
 
 
-/* ============================= */
+
 /* ADD UNIT CARD */
-/* ============================= */
+
 
 .unit-form-card {
   background-color: white;
@@ -858,9 +861,7 @@ body{
 }
 
 
-/* ============================= */
 /* FORM ROW */
-/* ============================= */
 
 .unit-form-row {
   display: grid;
@@ -874,9 +875,9 @@ body{
 }
 
 
-/* ============================= */
+
 /* FORM FIELDS */
-/* ============================= */
+
 
 .unit-field {
   display: flex;
@@ -923,9 +924,9 @@ body{
 }
 
 
-/* ============================= */
+
 /* FORM BUTTONS */
-/* ============================= */
+
 
 .unit-form-buttons {
   display: flex;
@@ -1006,6 +1007,12 @@ body{
   font-size: 15px;
 
   font-weight: 500;
+  background: #dff7e8; 
+  color: #165480;
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 20px;
+  
 }
 
 
@@ -1046,9 +1053,9 @@ body{
 }
 
 
-/* ============================= */
+
 /* TABLE */
-/* ============================= */
+
 
 .unit-table-wrapper {
   width: 100%;
@@ -1103,9 +1110,9 @@ body{
 }
 
 
-/* ============================= */
+
 /* STATUS */
-/* ============================= */
+
 
 .status-badge {
   display: inline-flex;
@@ -1134,9 +1141,9 @@ body{
 }
 
 
-/* ============================= */
+
 /* ACTION BUTTONS */
-/* ============================= */
+
 
 .unit-actions {
   display: flex;
@@ -1184,9 +1191,7 @@ body{
 }
 
 
-/* ============================= */
-/* NO UNITS */
-/* ============================= */
+
 
 .no-units {
   text-align: center;
@@ -1197,9 +1202,9 @@ body{
 }
 
 
-/* ============================= */
+
 /* RESPONSIVE */
-/* ============================= */
+
 
 @media (max-width: 1100px) {
 

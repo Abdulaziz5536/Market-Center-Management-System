@@ -221,9 +221,7 @@ export const updateAnnouncement = async (
       }
     }
 
-    // -----------------------------
-    // Update
-    // -----------------------------
+    
 
     const announcement =
       await Announcement.findByIdAndUpdate(

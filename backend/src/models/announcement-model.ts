@@ -34,7 +34,7 @@ const announcementSchema = new Schema(
       required: true,
     },
 
-    // Used only when audience is "Specific Tenants"
+    
     targetTenants: [
       {
         type: mongoose.Schema.Types.ObjectId,

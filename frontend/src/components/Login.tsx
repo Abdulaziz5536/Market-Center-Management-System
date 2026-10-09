@@ -67,9 +67,9 @@ const Login = () => {
         <div className="auth-header">
           
 
-          <h1>Welcome Back</h1>
+          <h1 style={{display:"flex",justifyContent:"center"}}>Login</h1>
 
-          <p>
+          <p style={{display:"flex",justifyContent:"center"}}>
             Sign in to your management dashboard
           </p>
         </div>

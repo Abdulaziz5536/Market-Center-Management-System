@@ -56,7 +56,7 @@ export const authenticateUser = async (
       });
     }
 
-    // Make sure the value coming from MongoDB is a valid access level
+    
     if (
       user.accessLevel !== "admin" &&
       user.accessLevel !== "readonly"

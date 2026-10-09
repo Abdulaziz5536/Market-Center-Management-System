@@ -4,7 +4,7 @@ import Tenant from "../models/tenant-model";
 import Unit from "../models/unit-model";
 
 
-// CREATE TENANT
+
 export const createTenant = async (
   req: Request,
   res: Response
@@ -21,7 +21,7 @@ export const createTenant = async (
       leaseAgreementFile,
     } = req.body;
 
-    // Check required fields
+    
     if (!tenantName || !phone || !unit) {
       return res.status(400).json({
         message:
@@ -29,7 +29,7 @@ export const createTenant = async (
       });
     }
 
-    // Check if the unit exists
+    
     const existingUnit = await Unit.findById(unit);
 
     if (!existingUnit) {
@@ -38,7 +38,7 @@ export const createTenant = async (
       });
     }
 
-    // Create tenant
+    
     const tenant = await Tenant.create({
       tenantName,
       phone,
@@ -67,7 +67,7 @@ export const createTenant = async (
 };
 
 
-// GET ALL TENANTS
+
 export const getTenants = async (
   req: Request,
   res: Response
@@ -94,7 +94,7 @@ export const getTenants = async (
 };
 
 
-// GET ONE TENANT
+
 export const getTenant = async (
   req: Request,
   res: Response
@@ -126,7 +126,7 @@ export const getTenant = async (
 };
 
 
-// UPDATE TENANT
+
 export const updateTenant = async (
   req: Request,
   res: Response
@@ -143,7 +143,7 @@ export const updateTenant = async (
       leaseAgreementFile,
     } = req.body;
 
-    // Find tenant
+  
     const tenant = await Tenant.findById(
       req.params.id
     );
@@ -154,7 +154,7 @@ export const updateTenant = async (
       });
     }
 
-    // Check if the new unit exists
+    
     const existingUnit = await Unit.findById(unit);
 
     if (!existingUnit) {
@@ -163,7 +163,7 @@ export const updateTenant = async (
       });
     }
 
-    // Update tenant
+
     tenant.tenantName = tenantName;
     tenant.phone = phone;
     tenant.email = email;
@@ -199,7 +199,7 @@ export const updateTenant = async (
 };
 
 
-// DELETE TENANT
+
 export const deleteTenant = async (
   req: Request,
   res: Response

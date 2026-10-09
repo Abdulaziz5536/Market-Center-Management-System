@@ -19,7 +19,7 @@ export const addUnit = async (req: Request, res: Response) => {
       !monthlyRent
     ) {
       return res.status(400).json({
-        message: "All required fields must be provided",
+        message: "All required fields must be provided!",
       });
     }
 
