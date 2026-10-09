@@ -57,9 +57,7 @@ return ( <aside className="sidebar"> <NavLink to="/dashboard" className="sidebar
       >
         Announcements
       </NavLink>
-    </div>
 
-    <div className="sidebar-bottom-links">
       {admin && (
         <NavLink
           to="/settings"
@@ -68,7 +66,9 @@ return ( <aside className="sidebar"> <NavLink to="/dashboard" className="sidebar
           Settings
         </NavLink>
       )}
+    </div>
 
+    <div className="sidebar-bottom-links">
       <button
         type="button"
         className="sidebar-logout"
