@@ -1,96 +1,88 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { isAdmin } from "./utils/auth";
 
 const Sidebar = () => {
+const admin = isAdmin();
+const navigate = useNavigate();
 
-  const admin = isAdmin();
-  return (
-    <div className="sidebar">
+const handleLogout = () => {
+localStorage.removeItem("token");
+localStorage.removeItem("user");
+navigate("/login", { replace: true });
+};
 
-      <NavLink to="/dashboard" className="sidebar-brand">
-        <h2>Market Center</h2>
+return ( <aside className="sidebar"> <NavLink to="/dashboard" className="sidebar-brand"> <h2>Market Center</h2> </NavLink>
+
+
+  <nav className="sidebar-nav">
+    <div className="sidebar-main-links">
+      <NavLink
+        to="/dashboard"
+        className={({ isActive }) => isActive ? "active" : ""}
+      >
+        Dashboard
       </NavLink>
 
-      <nav>
+      <NavLink
+        to="/units"
+        className={({ isActive }) => isActive ? "active" : ""}
+      >
+        Units
+      </NavLink>
 
+      <NavLink
+        to="/tenants"
+        className={({ isActive }) => isActive ? "active" : ""}
+      >
+        Tenants
+      </NavLink>
+
+      <NavLink
+        to="/contracts"
+        className={({ isActive }) => isActive ? "active" : ""}
+      >
+        Contracts
+      </NavLink>
+
+      <NavLink
+        to="/utilities"
+        className={({ isActive }) => isActive ? "active" : ""}
+      >
+        Utilities
+      </NavLink>
+
+      <NavLink
+        to="/announcement"
+        className={({ isActive }) => isActive ? "active" : ""}
+      >
+        Announcements
+      </NavLink>
+    </div>
+
+    <div className="sidebar-bottom-links">
+      {admin && (
         <NavLink
-          to="/dashboard"
-          className={({ isActive }) =>
-            isActive ? "active" : ""
-          }
-        >
-          Dashboard
-        </NavLink>
-
-        <NavLink
-          to="/units"
-          className={({ isActive }) =>
-            isActive ? "active" : ""
-          }
-        >
-          Units
-        </NavLink>
-
-        <NavLink
-          to="/tenants"
-          className={({ isActive }) =>
-            isActive ? "active" : ""
-          }
-        >
-          Tenants
-        </NavLink>
-
-        <NavLink
-          to="/contracts"
-          className={({ isActive }) =>
-            isActive ? "active" : ""
-          }
-        >
-          Contracts
-        </NavLink>
-
-        <NavLink
-          to="/utilities"
-          className={({ isActive }) =>
-            isActive ? "active" : ""
-          }
-        >
-          Utilities
-        </NavLink>
-
-      
-
-        <NavLink
-          to="/announcement"
-          className={({ isActive }) =>
-            isActive ? "active" : ""
-          }
-        >
-          Announcement
-        </NavLink>
-
-       {admin && ( <NavLink
           to="/settings"
-          className={({ isActive }) =>
-            isActive ? "active" : ""
-          }
+          className={({ isActive }) => isActive ? "active" : ""}
         >
           Settings
-        </NavLink> )}
+        </NavLink>
+      )}
 
-        <NavLink
-        style={{backgroundColor:"red"}}
-        to="/login"
-        className={({isActive})=>
-        isActive ? "active" : ""
-      }>
-      Log out 
-      </NavLink>
-
-      </nav>
-
+      <button
+        type="button"
+        className="sidebar-logout"
+        onClick={handleLogout}
+      >
+        <span className="logout-icon">↪</span>
+        Log out
+      </button>
     </div>
-  );
+  </nav>
+</aside>
+
+
+);
 };
 
 export default Sidebar;

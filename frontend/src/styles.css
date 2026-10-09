@@ -100,9 +100,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    FORM
-========================================= */
+ */
 
 .auth-form {
   width: 100%;
@@ -125,9 +125,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    INPUTS
-========================================= */
+ */
 
 .auth-input-group input {
   width: 100%;
@@ -169,9 +169,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    PASSWORD
-========================================= */
+ */
 
 .password-wrapper {
   position: relative;
@@ -219,9 +219,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    BUTTON
-========================================= */
+ */
 
 .auth-button {
   width: 100%;
@@ -264,9 +264,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    MESSAGE
-========================================= */
+ */
 
 .auth-message {
   margin-top: 14px;
@@ -297,9 +297,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    FOOTER
-========================================= */
+ */
 
 .auth-footer {
   margin-top: 25px;
@@ -338,9 +338,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    MOBILE
-========================================= */
+ */
 
 @media (max-width: 500px) {
   .auth-page {
@@ -361,9 +361,9 @@ body{
 
 
 
-/* =========================================
+/* 
    FORM
-========================================= */
+ */
 
 .auth-form {
   width: 100%;
@@ -386,9 +386,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    INPUTS
-========================================= */
+ */
 
 .auth-input-group input {
   width: 100%;
@@ -431,9 +431,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    PASSWORD
-========================================= */
+ */
 
 .password-wrapper {
   position: relative;
@@ -480,9 +480,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    BUTTON
-========================================= */
+ */
 
 .auth-button {
   width: 100%;
@@ -535,9 +535,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    MESSAGE
-========================================= */
+ */
 
 .auth-message {
   margin-top: 16px;
@@ -568,9 +568,9 @@ body{
 }
 
 
-/* =========================================
+/* 
    FOOTER
-========================================= */
+ */
 
 .auth-footer {
   text-align: center;
@@ -631,64 +631,158 @@ body{
 
 
 
+
+/* sidebar */
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 220px;
+  height: 100vh;
   min-height: 100vh;
-  flex-shrink: 0;
-
-  background-color: rgb(6, 12, 17);
-  color: white;
-
-  padding: 20px;
-  padding-left: 0%;
   box-sizing: border-box;
-}
-
-.sidebar h2 {
-  margin-bottom: 40px;
-}
-
-.sidebar .sidebar-brand {
-  display: block;
-  width: auto;
-  margin-left: 10px;
-  padding: 0;
-  color: inherit;
-  text-decoration: none;
-}
-
-.sidebar .sidebar-brand:hover {
-  width: auto;
-  background-color: transparent;
-}
-
-.sidebar nav {
+  padding: 35px 16px 22px;
+  background-color: rgb(2, 36, 56);
+  color: white;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  overflow-y: auto;
+  z-index: 1000;
 }
 
-.sidebar nav a {
-  color: rgb(255, 255, 255);
+
+.sidebar-brand {
+  display: block;
+  flex-shrink: 0;
+  color: white;
   text-decoration: none;
-
-  padding: 12px;
-  
-  width: 197px;
-  transition: background-color 0.2s ease;
+  margin: 0 0 30px;
+  padding: 0 8px;
 }
 
-.sidebar nav a:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-  width: 197px;
+.sidebar-brand h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: nowrap;
 }
 
-
-.sidebar nav a.active {
-  background-color: rgba(255, 255, 255, 0.15);
-  width: 200px;
+/* Let navigation occupy the available height */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 20px;
 }
 
+/* Spread the main navigation items vertically */
+.sidebar-main-links {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-evenly;
+  gap: 8px;
+}
+
+/* Navigation link appearance */
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  color: #d6e2eb;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.sidebar-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.09);
+  color: white;
+}
+
+.sidebar-nav a.active {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: white;
+  box-shadow: inset 3px 0 0 #75c7f0;
+}
+
+/* Settings and logout stay near the bottom */
+.sidebar-bottom-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+/* Styled logout button */
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 130, 130, 0.3);
+  border-radius: 8px;
+  background-color: rgba(220, 53, 69, 0.13);
+  color: #ffb4b4;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.sidebar-logout:hover {
+  background-color: #c83b46;
+  color: white;
+}
+
+.logout-icon {
+  font-size: 21px;
+  line-height: 1;
+}
+
+/* Offset page content because the sidebar is fixed */
+.page-content {
+  flex: 1;
+  min-width: 0;
+  margin-left: 220px;
+  padding: 35px 40px;
+  box-sizing: border-box;
+  background-color: #f5f8fc;
+}
+
+/* Keep the layout usable on smaller screens */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 180px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .sidebar-brand h2 {
+    font-size: 20px;
+  }
+
+  .page-content {
+    margin-left: 180px;
+    padding: 25px 20px;
+  }
+}
 
 .app-layout {
   display: flex;

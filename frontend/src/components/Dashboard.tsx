@@ -93,7 +93,9 @@ const Dashboard = () => {
       <main className="page-content">
         <div className="units-page dashboard-page">
           <div className="dashboard-heading">
-            <div><h1 className="page-title refresh-page-title" role="button" tabIndex={0} title="Click to refresh dashboard" onClick={() => void loadDashboard()} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); void loadDashboard(); } }}>Dashboard</h1><p>{loading ? "Loading dashboard..." : "Overview of your market center."}</p></div>
+            <div>
+              <h1 className="page-title refresh-page-title" role="button" tabIndex={0} title="Click to refresh dashboard" onClick={() => void loadDashboard()} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); void loadDashboard(); } }}>Dashboard</h1>
+              <p>{loading ? "Loading dashboard..." : "Overview of your market center."}</p></div>
           </div>
           {message && <div className="unit-message">{message}</div>}
 
