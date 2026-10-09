@@ -153,12 +153,25 @@ const Contracts = () => {
   };
 
   const filteredContracts = useMemo(() => {
-    const searchTerm = search.toLowerCase();
-    return contracts.filter((contract) => {
-      const name = typeof contract.tenant === "string" ? contract.tenant : contract.tenant?.tenantName;
-      return name?.toLowerCase().includes(searchTerm);
-    });
-  }, [contracts, search]);
+  const searchTerm = search.toLowerCase().trim();
+
+  return contracts.filter((contract) => {
+    const tenantName =
+      typeof contract.tenant === "string"
+        ? contract.tenant.toLowerCase()
+        : contract.tenant?.tenantName?.toLowerCase() || "";
+
+    const amount = String(contract.amount ?? "").toLowerCase();
+
+    const status = String(contract.status ?? "").toLowerCase();
+
+    return (
+      tenantName.includes(searchTerm) ||
+      amount.includes(searchTerm) ||
+      status.includes(searchTerm)
+    );
+  });
+}, [contracts, search]);
 
   const tenantName = (contractTenant: Contract["tenant"]) =>
     typeof contractTenant === "string" ? contractTenant : contractTenant?.tenantName ?? "—";

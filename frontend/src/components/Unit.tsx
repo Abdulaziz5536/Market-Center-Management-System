@@ -167,12 +167,20 @@ const Units = () => {
   };
 
     const filteredUnits = useMemo(() => {
-      const searchTerm = search.toLowerCase();
-      return units.filter((unit) => {
-        const name = typeof unit.unitId === "string" ? unit.unitId : unit.unitId?.type;
-        return name?.toLowerCase().includes(searchTerm);
-      });
-    }, [units, search]);
+  const searchTerm = search.toLowerCase().trim();
+
+  return units.filter((unit) => {
+    const unitId = String(unit.unitId ?? "").toLowerCase();
+    const status = String(unit.status ?? "").toLowerCase();
+    const rent = String(unit.monthlyRent ?? "").toLowerCase();
+
+    return (
+      unitId.includes(searchTerm) ||
+      status.includes(searchTerm) ||
+      rent.includes(searchTerm)
+    );
+  });
+}, [units, search]);
 
   return (
     <div className="app-layout">

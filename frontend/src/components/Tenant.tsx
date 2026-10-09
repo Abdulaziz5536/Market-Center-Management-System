@@ -167,13 +167,20 @@ const Tenants = () => {
     }
   };
 
-  const filteredTenants = useMemo(() => {
-        const searchTerm = search.toLowerCase();
-        return tenants.filter((tenant) => {
-          const name = typeof tenant.tenantName === "string" ? tenant.tenantName : tenant.tenantName?.unit;
-          return name?.toLowerCase().includes(searchTerm);
-        });
-      }, [tenants, search]);
+const filteredTenants = useMemo(() => {
+  const searchTerm = search.toLowerCase().trim();
+  return tenants.filter((tenant) => {
+    const tenantName = tenant.tenantName?.toLowerCase() || "";
+
+    const unitId = typeof tenant.unit === "object" && tenant.unit !== null
+        ? tenant.unit.unitId?.toLowerCase() || "" : "";
+
+    return (
+      tenantName.includes(searchTerm) ||
+      unitId.includes(searchTerm)
+    );
+  });
+}, [tenants, search]);
 
   return (
     <div className="app-layout">

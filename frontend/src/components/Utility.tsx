@@ -112,7 +112,7 @@ const Utilities = () => {
 
   const filteredUtilities = useMemo(() => utilities.filter((utility) => {
     const unitName = typeof utility.unit === "string" ? utility.unit : utility.unit?.unitId;
-    return `${unitName} ${utility.utilityType}`.toLowerCase().includes(search.toLowerCase());
+    return `${unitName} ${utility.utilityType} ${utility.status}`.toLowerCase().includes(search.toLowerCase());
   }), [utilities, search]);
 
   const unitName = (utilityUnit: Utility["unit"]) => typeof utilityUnit === "string" ? utilityUnit : utilityUnit?.unitId ?? "—";
