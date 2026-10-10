@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../Sidebar";
+import { apiFetch } from "../api";
 import "../styles.css";
 
 type Unit = { _id: string; unitId: string; status: "Available" | "Occupied" };
@@ -35,10 +36,10 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const [unitsResponse, tenantsResponse, contractsResponse, utilitiesResponse] = await Promise.all([
-        fetch(`${API_URL}/units`),
-        fetch(`${API_URL}/tenants`),
-        fetch(`${API_URL}/contracts`),
-        fetch(`${API_URL}/utilities`),
+        apiFetch(`${API_URL}/units`),
+        apiFetch(`${API_URL}/tenants`),
+        apiFetch(`${API_URL}/contracts`),
+        apiFetch(`${API_URL}/utilities`),
       ]);
       const [unitsData, tenantsData, contractsData, utilitiesData] = await Promise.all([
         unitsResponse.json(), tenantsResponse.json(), contractsResponse.json(), utilitiesResponse.json(),

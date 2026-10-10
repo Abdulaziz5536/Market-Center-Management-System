@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
+import { apiFetch } from "../api";
 import "../styles.css";
 
 type AccessLevel = "admin" | "readonly";

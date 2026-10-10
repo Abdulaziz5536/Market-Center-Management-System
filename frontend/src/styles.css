@@ -1412,5 +1412,297 @@ body{
 
 
 
+/* Settings page */
+.settings-page {
+  color: #243247;
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.settings-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.settings-heading h2 {
+  margin: 0 0 8px;
+  font-size: 23px;
+}
+
+.settings-heading p {
+  margin: 0;
+  color: #778398;
+  font-size: 14px;
+}
+
+.settings-primary-button,
+.settings-secondary-button,
+.settings-edit-button,
+.settings-delete-button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.settings-primary-button {
+  background: #3157d5;
+  color: #fff;
+}
+
+.settings-primary-button:hover {
+  background: #2445b4;
+}
+
+.settings-secondary-button {
+  background: #edf0f5;
+  color: #354258;
+}
+
+.settings-secondary-button:hover {
+  background: #dfe5ee;
+}
+
+.settings-edit-button {
+  background: #edf2ff;
+  color: #3157d5;
+  padding: 8px 12px;
+}
+
+.settings-edit-button:hover {
+  background: #dce6ff;
+}
+
+.settings-delete-button {
+  background: #fff0f0;
+  color: #c53d3d;
+  padding: 8px 12px;
+}
+
+.settings-delete-button:hover:not(:disabled) {
+  background: #ffe0e0;
+}
+
+.settings-delete-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.settings-primary-button:disabled,
+.settings-secondary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.settings-form,
+.settings-table-card {
+  background: #fff;
+  border: 1px solid #e5eaf1;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 3px 12px rgba(25, 45, 80, 0.04);
+}
+
+.settings-form h3,
+.settings-table-heading h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.settings-form h3 {
+  margin-bottom: 22px;
+}
+
+.settings-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.settings-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #46546a;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-form-grid input,
+.settings-form-grid select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  padding: 12px;
+  background: #f9fbfe;
+  color: #243247;
+  font: inherit;
+  font-weight: 400;
+  outline: none;
+}
+
+.settings-form-grid input:focus,
+.settings-form-grid select:focus {
+  border-color: #3157d5;
+  box-shadow: 0 0 0 3px rgba(49, 87, 213, 0.1);
+}
+
+.settings-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.settings-message {
+  padding: 13px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.success-message {
+  background: #eaf8ef;
+  color: #237342;
+}
+
+.error-message {
+  background: #fff0f0;
+  color: #b52f2f;
+}
+
+.settings-table-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.settings-table-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 24px;
+  border-bottom: 1px solid #e8edf4;
+}
+
+.settings-table-heading span {
+  color: #778398;
+  font-size: 13px;
+}
+
+.settings-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.settings-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.settings-table th,
+.settings-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid #edf0f5;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.settings-table th {
+  background: #f8faff;
+  color: #788499;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.settings-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.settings-table tbody tr:hover {
+  background: #fafcff;
+}
+
+.settings-user-name {
+  color: #26354b;
+  font-weight: 600;
+}
+
+.access-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-badge {
+  background: #e9edff;
+  color: #3452bd;
+}
+
+.readonly-badge {
+  background: #eef1f5;
+  color: #667387;
+}
+
+.current-user-label {
+  color: #23824a;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.settings-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-empty {
+  padding: 28px 24px;
+  color: #778398;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .settings-form,
+  .settings-table-card {
+    border-radius: 10px;
+  }
+
+  .settings-form {
+    padding: 18px;
+  }
+
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-table th,
+  .settings-table td {
+    padding: 14px 16px;
+  }
+
+  .settings-table-heading {
+    padding: 18px;
+  }
+}
+
+
+
 
     

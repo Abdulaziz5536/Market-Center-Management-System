@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import Sidebar from "../Sidebar";
 import { isAdmin } from "../utils/auth";
+import { apiFetch } from "../api";
 import "../styles.css";
 
 type Tenant = { _id: string; tenantName: string; phone: string };
@@ -38,8 +39,8 @@ const Contracts = () => {
   const loadData = async () => {
     try {
       const [contractsResponse, tenantsResponse] = await Promise.all([
-        fetch(`${API_URL}/contracts`),
-        fetch(`${API_URL}/tenants`),
+        apiFetch(`${API_URL}/contracts`),
+        apiFetch(`${API_URL}/tenants`),
       ]);
       const [contractsData, tenantsData] = await Promise.all([
         contractsResponse.json(),
@@ -96,7 +97,7 @@ const Contracts = () => {
       ...(contractFile && { contractFile }),
     };
     try {
-      const response = await fetch(editingId ? `${API_URL}/contracts/${editingId}` : `${API_URL}/contracts`, {
+      const response = await apiFetch(editingId ? `${API_URL}/contracts/${editingId}` : `${API_URL}/contracts`, {
         method: editingId ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -128,7 +129,7 @@ const Contracts = () => {
   const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this contract?")) return;
     try {
-      const response = await fetch(`${API_URL}/contracts/${id}`, { method: "DELETE" });
+      const response = await apiFetch(`${API_URL}/contracts/${id}`, { method: "DELETE" });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
       setMessage(data.message);
@@ -140,7 +141,7 @@ const Contracts = () => {
 
   const downloadContractFile = async (id: string) => {
     try {
-      const response = await fetch(`${API_URL}/contracts/${id}`);
+      const response = await apiFetch(`${API_URL}/contracts/${id}`);
       const data = await response.json();
       if (!response.ok || !data.contract?.contractFile?.data) throw new Error("File not found");
       const link = document.createElement("a");
