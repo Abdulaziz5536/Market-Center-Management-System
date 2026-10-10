@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import Sidebar from "../Sidebar";
 import { isAdmin } from "../utils/auth";
+import { apiFetch } from "../api";
 import "../styles.css";
 
 type Unit = { _id: string; unitId: string };
@@ -16,7 +17,7 @@ type Utility = {
   receiptFile?: ReceiptFile;
 };
 
-const API_URL = "http://localhost:5000";
+
 
 const Utilities = () => {
 
@@ -36,7 +37,7 @@ const Utilities = () => {
 
   const loadData = async () => {
     try {
-      const [utilitiesResponse, unitsResponse] = await Promise.all([fetch(`${API_URL}/utilities`), fetch(`${API_URL}/units`)]);
+      const [utilitiesResponse, unitsResponse] = await Promise.all([apiFetch(`/utilities`), apiFetch(`/units`)]);
       const [utilitiesData, unitsData] = await Promise.all([utilitiesResponse.json(), unitsResponse.json()]);
       if (!utilitiesResponse.ok) throw new Error(utilitiesData.message);
       setUtilities(utilitiesData.utilities ?? []);
@@ -66,7 +67,7 @@ const Utilities = () => {
     event.preventDefault();
     const payload = { unit, utilityType, billingMonth, amount: Number(amount), dueDate, status, ...(receiptFile && { receiptFile }) };
     try {
-      const response = await fetch(editingId ? `${API_URL}/utilities/${editingId}` : `${API_URL}/utilities`, {
+      const response = await apiFetch(editingId ? `/utilities/${editingId}` : `/utilities`, {
         method: editingId ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload),
       });
       const data = await response.json();
@@ -87,7 +88,7 @@ const Utilities = () => {
   const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this utility bill?")) return;
     try {
-      const response = await fetch(`${API_URL}/utilities/${id}`, { method: "DELETE" });
+      const response = await apiFetch(`/utilities/${id}`, { method: "DELETE" });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
       setMessage(data.message); void loadData();
@@ -98,7 +99,7 @@ const Utilities = () => {
 
   const downloadReceipt = async (id: string) => {
     try {
-      const response = await fetch(`${API_URL}/utilities/${id}`);
+      const response = await apiFetch(`/utilities/${id}`);
       const data = await response.json();
       if (!response.ok || !data.utility?.receiptFile?.data) throw new Error("Receipt not found");
       const link = document.createElement("a");

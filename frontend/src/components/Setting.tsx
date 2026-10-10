@@ -12,7 +12,7 @@ interface User {
   accessLevel: AccessLevel;
 }
 
-const API_URL = "http://localhost:5000/auth";
+const API_URL = "/auth";
 
 const Setting = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -58,7 +58,7 @@ const Setting = () => {
     setError("");
 
     try {
-      const response = await fetch(`${API_URL}/`, {
+      const response = await apiFetch(`${API_URL}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -184,7 +184,7 @@ const Setting = () => {
     setError("");
 
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `${API_URL}/${user._id}`,
         {
           method: "DELETE",
@@ -217,7 +217,7 @@ const Setting = () => {
 
       <main className="page-content settings-page">
         <header className="page-header">
-          <h1 className="page-title">Settings</h1>
+          <h1 className="page-title" style={{color:"black"}}>Settings</h1>
         </header>
 
         <section className="settings-section">
@@ -388,6 +388,7 @@ const Setting = () => {
                         <td className="settings-user-name">
                           {user.name}
                         </td>
+                       
 
                         <td>{user.email}</td>
 
@@ -408,7 +409,7 @@ const Setting = () => {
                         <td>
                           {user._id === currentUserId ? (
                             <span className="current-user-label">
-                              You
+                              YOU
                             </span>
                           ) : (
                             "User"

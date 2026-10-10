@@ -1,6 +1,7 @@
 import { useMemo, useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import { isAdmin } from "../utils/auth";
+import { apiFetch } from "../api";
 import "../styles.css";
 
 
@@ -43,7 +44,7 @@ const Tenants = () => {
 
   const getTenants = async () => {
     try {
-      const response = await fetch("http://localhost:5000/tenants");
+      const response = await apiFetch("/tenants");
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
       setTenants(data.tenants ?? []);
@@ -55,7 +56,7 @@ const Tenants = () => {
 
   const getUnits = async () => {
     try {
-      const response = await fetch("http://localhost:5000/units");
+      const response = await apiFetch("/units");
       const data = await response.json();
       if (response.ok) setUnits(data.units ?? []);
     } catch (error) {
@@ -104,7 +105,7 @@ const Tenants = () => {
   };
 
   const markUnitOccupied = async (unitId: string) => {
-    await fetch(`http://localhost:5000/units/${unitId}`, {
+    await apiFetch(`/units/${unitId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: "Occupied" }),
@@ -114,8 +115,8 @@ const Tenants = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch(
-        editingId ? `http://localhost:5000/tenants/${editingId}` : "http://localhost:5000/tenants",
+      const response = await apiFetch(
+        editingId ? `/tenants/${editingId}` : "/tenants",
         {
           method: editingId ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
@@ -156,7 +157,7 @@ const Tenants = () => {
   const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this tenant?")) return;
     try {
-      const response = await fetch(`http://localhost:5000/tenants/${id}`, { method: "DELETE" });
+      const response = await apiFetch(`/tenants/${id}`, { method: "DELETE" });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
       setMessage(data.message);

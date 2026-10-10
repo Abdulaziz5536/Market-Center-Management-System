@@ -22,7 +22,7 @@ type Utility = {
   unit: Unit | string;
 };
 
-const API_URL = "http://localhost:5000";
+
 
 const Dashboard = () => {
   const [units, setUnits] = useState<Unit[]>([]);
@@ -36,10 +36,10 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const [unitsResponse, tenantsResponse, contractsResponse, utilitiesResponse] = await Promise.all([
-        apiFetch(`${API_URL}/units`),
-        apiFetch(`${API_URL}/tenants`),
-        apiFetch(`${API_URL}/contracts`),
-        apiFetch(`${API_URL}/utilities`),
+        apiFetch(`/units`),
+        apiFetch(`/tenants`),
+        apiFetch(`/contracts`),
+        apiFetch(`/utilities`),
       ]);
       const [unitsData, tenantsData, contractsData, utilitiesData] = await Promise.all([
         unitsResponse.json(), tenantsResponse.json(), contractsResponse.json(), utilitiesResponse.json(),
@@ -103,8 +103,8 @@ const Dashboard = () => {
           <section className="dashboard-cards">
             <article className="dashboard-card"><span>Total Units</span><strong>{units.length}</strong><small>{summary.availableUnits} available · {summary.occupiedUnits} occupied</small></article>
             <article className="dashboard-card"><span>Tenants</span><strong>{tenants.length}</strong><small>{summary.activeContracts} active contracts</small></article>
-            <article className="dashboard-card"><span>Monthly Income</span><strong>Br {summary.monthlyIncome.toLocaleString()}</strong><small>From paid contracts</small></article>
-            <article className="dashboard-card outstanding-card"><span>Outstanding Balance</span><strong>Br {summary.outstanding.toLocaleString()}</strong><small>{summary.pendingItems} pending or overdue item{summary.pendingItems === 1 ? "" : "s"}</small></article>
+            <article className="dashboard-card" style={{width:350}}><span>Monthly Income</span><strong>Br {summary.monthlyIncome.toLocaleString()}</strong><small>From paid contracts</small></article>
+            <article className="dashboard-card outstanding-card" style={{marginLeft:50}}><span>Outstanding Balance</span><strong>Br {summary.outstanding.toLocaleString()}</strong><small>{summary.pendingItems} pending or overdue item{summary.pendingItems === 1 ? "" : "s"}</small></article>
           </section>
 
           <section className="dashboard-grid">

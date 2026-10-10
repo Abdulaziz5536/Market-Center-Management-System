@@ -17,7 +17,6 @@ type Contract = {
   contractFile?: ContractFile;
 };
 
-const API_URL = "http://localhost:5000";
 
 const Contracts = () => {
 
@@ -39,8 +38,8 @@ const Contracts = () => {
   const loadData = async () => {
     try {
       const [contractsResponse, tenantsResponse] = await Promise.all([
-        apiFetch(`${API_URL}/contracts`),
-        apiFetch(`${API_URL}/tenants`),
+        apiFetch(`/contracts`),
+        apiFetch(`/tenants`),
       ]);
       const [contractsData, tenantsData] = await Promise.all([
         contractsResponse.json(),
@@ -97,7 +96,7 @@ const Contracts = () => {
       ...(contractFile && { contractFile }),
     };
     try {
-      const response = await apiFetch(editingId ? `${API_URL}/contracts/${editingId}` : `${API_URL}/contracts`, {
+      const response = await apiFetch(editingId ? `/contracts/${editingId}` : `/contracts`, {
         method: editingId ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -129,7 +128,7 @@ const Contracts = () => {
   const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this contract?")) return;
     try {
-      const response = await apiFetch(`${API_URL}/contracts/${id}`, { method: "DELETE" });
+      const response = await apiFetch(`/contracts/${id}`, { method: "DELETE" });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
       setMessage(data.message);
@@ -141,7 +140,7 @@ const Contracts = () => {
 
   const downloadContractFile = async (id: string) => {
     try {
-      const response = await apiFetch(`${API_URL}/contracts/${id}`);
+      const response = await apiFetch(`/contracts/${id}`);
       const data = await response.json();
       if (!response.ok || !data.contract?.contractFile?.data) throw new Error("File not found");
       const link = document.createElement("a");
