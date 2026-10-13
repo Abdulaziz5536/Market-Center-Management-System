@@ -1,88 +1,125 @@
+
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { isAdmin } from "./utils/auth";
 
 const Sidebar = () => {
-const admin = isAdmin();
-const navigate = useNavigate();
+  const admin = isAdmin();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-const handleLogout = () => {
-localStorage.removeItem("token");
-localStorage.removeItem("user");
-navigate("/login", { replace: true });
-};
+  const closeMenu = () => setMenuOpen(false);
 
-return ( <aside className="sidebar"> <NavLink to="/dashboard" className="sidebar-brand"> <h2>Market Center</h2> </NavLink>
+  useEffect(() => {
+    if (!menuOpen) return;
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    };
 
-  <nav className="sidebar-nav">
-    <div className="sidebar-main-links">
-      <NavLink
-        to="/dashboard"
-        className={({ isActive }) => isActive ? "active" : ""}
-      >
-        Dashboard
-      </NavLink>
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menuOpen]);
 
-      <NavLink
-        to="/units"
-        className={({ isActive }) => isActive ? "active" : ""}
-      >
-        Units
-      </NavLink>
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    closeMenu();
+    navigate("/login", { replace: true });
+  };
 
-      <NavLink
-        to="/tenants"
-        className={({ isActive }) => isActive ? "active" : ""}
-      >
-        Tenants
-      </NavLink>
+  const linkClass = ({ isActive }: { isActive: boolean }) =>
+    isActive ? "active" : "";
 
-      <NavLink
-        to="/contracts"
-        className={({ isActive }) => isActive ? "active" : ""}
-      >
-        Contracts
-      </NavLink>
-
-      <NavLink
-        to="/utilities"
-        className={({ isActive }) => isActive ? "active" : ""}
-      >
-        Utilities
-      </NavLink>
-
-      <NavLink
-        to="/announcement"
-        className={({ isActive }) => isActive ? "active" : ""}
-      >
-        Announcements
-      </NavLink>
-
-      {admin && (
-        <NavLink
-          to="/settings"
-          className={({ isActive }) => isActive ? "active" : ""}
-        >
-          Settings
-        </NavLink>
-      )}
-    </div>
-
-    <div className="sidebar-bottom-links">
+  return (
+    <>
       <button
         type="button"
-        className="sidebar-logout"
-        onClick={handleLogout}
+        className="mobile-menu-button"
+        aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((open) => !open)}
       >
-        <span className="logout-icon">↪</span>
-        Log out
+        {menuOpen ? "✕" : "☰"}
       </button>
-    </div>
-  </nav>
-</aside>
 
+      {menuOpen && (
+        <button
+          type="button"
+          className="sidebar-overlay"
+          aria-label="Close navigation menu"
+          onClick={closeMenu}
+        />
+      )}
 
-);
+      <aside className={`sidebar ${menuOpen ? "sidebar-open" : ""}`}>
+        <NavLink
+          to="/dashboard"
+          className="sidebar-brand"
+          onClick={closeMenu}
+        >
+          <h2>Market Center</h2>
+        </NavLink>
+
+        <nav className="sidebar-nav">
+          <div className="sidebar-main-links">
+            <NavLink to="/dashboard" className={linkClass} onClick={closeMenu}>
+              Dashboard
+            </NavLink>
+
+            <NavLink to="/units" className={linkClass} onClick={closeMenu}>
+              Units
+            </NavLink>
+
+            <NavLink to="/tenants" className={linkClass} onClick={closeMenu}>
+              Tenants
+            </NavLink>
+
+            <NavLink to="/contracts" className={linkClass} onClick={closeMenu}>
+              Contracts
+            </NavLink>
+
+            <NavLink to="/utilities" className={linkClass} onClick={closeMenu}>
+              Utilities
+            </NavLink>
+
+            <NavLink
+              to="/announcement"
+              className={linkClass}
+              onClick={closeMenu}
+            >
+              Announcements
+            </NavLink>
+
+            {admin && (
+              <NavLink
+                to="/settings"
+                className={linkClass}
+                onClick={closeMenu}
+              >
+                Settings
+              </NavLink>
+            )}
+          </div>
+
+          <div className="sidebar-bottom-links">
+            <button
+              type="button"
+              className="sidebar-logout"
+              onClick={handleLogout}
+            >
+              <span className="logout-icon">↪</span>
+              Log out
+            </button>
+          </div>
+        </nav>
+      </aside>
+    </>
+  );
 };
 
 export default Sidebar;
