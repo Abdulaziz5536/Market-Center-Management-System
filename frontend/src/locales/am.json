@@ -1,0 +1,31 @@
+
+{
+  "appName": "የገበያ ማዕከል",
+  "navigation": {
+    "dashboard": "ዳሽቦርድ",
+    "units": "ሱቆች",
+    "tenants": "ተከራዮች",
+    "contracts": "ውሎች",
+    "utilities": "የመገልገያ አገልግሎቶች",
+    "announcements": "ማስታወቂያዎች",
+    "settings": "ቅንብሮች",
+    "logout": "ውጣ"
+  },
+  "common": {
+    "save": "አስቀምጥ",
+    "cancel": "ሰርዝ",
+    "edit": "አስተካክል",
+    "delete": "ሰርዝ",
+    "search": "ፈልግ",
+    "loading": "በመጫን ላይ...",
+    "noData": "ምንም ውሂብ አልተገኘም",
+    "language": "ቋንቋ"
+  },
+  "auth": {
+    "login": "ግባ",
+    "register": "ይመዝገቡ",
+    "email": "ኢሜይል",
+    "password": "የይለፍ ቃል",
+    "name": "ስም"
+  }
+}

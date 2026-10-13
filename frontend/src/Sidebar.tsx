@@ -1,7 +1,8 @@
-
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { isAdmin } from "./utils/auth";
+import LanguageSelector from "./LanguageSelector";
+
 
 const Sidebar = () => {
   const admin = isAdmin();
@@ -37,6 +38,7 @@ const Sidebar = () => {
 
   return (
     <>
+    
       <button
         type="button"
         className="mobile-menu-button"
@@ -63,13 +65,17 @@ const Sidebar = () => {
           onClick={closeMenu}
         >
           <h2>Market Center</h2>
+
         </NavLink>
+
+        
 
         <nav className="sidebar-nav">
           <div className="sidebar-main-links">
             <NavLink to="/dashboard" className={linkClass} onClick={closeMenu}>
               Dashboard
             </NavLink>
+
 
             <NavLink to="/units" className={linkClass} onClick={closeMenu}>
               Units
@@ -106,7 +112,10 @@ const Sidebar = () => {
             )}
           </div>
 
+          
+
           <div className="sidebar-bottom-links">
+            <LanguageSelector />
             <button
               type="button"
               className="sidebar-logout"

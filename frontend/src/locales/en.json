@@ -1,0 +1,31 @@
+
+{
+  "appName": "Market Center",
+  "navigation": {
+    "dashboard": "Dashboard",
+    "units": "Units",
+    "tenants": "Tenants",
+    "contracts": "Contracts",
+    "utilities": "Utilities",
+    "announcements": "Announcements",
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "search": "Search",
+    "loading": "Loading...",
+    "noData": "No data found",
+    "language": "Language"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name"
+  }
+}

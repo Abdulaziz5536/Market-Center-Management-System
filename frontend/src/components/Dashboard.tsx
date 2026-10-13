@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar";
 import { apiFetch } from "../api";
 import "../styles.css";
 
+
 type Unit = { _id: string; unitId: string; status: "Available" | "Occupied" };
 type Tenant = { _id: string; tenantName: string };
 type Contract = {
@@ -91,8 +92,10 @@ const Dashboard = () => {
   return (
     <div className="app-layout">
       <Sidebar />
+      
       <main className="page-content">
         <div className="units-page dashboard-page">
+
           <div className="dashboard-heading">
             <div>
               <h1 className="page-title refresh-page-title" role="button" tabIndex={0} title="Click to refresh dashboard" onClick={() => void loadDashboard()} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); void loadDashboard(); } }}>Dashboard</h1>

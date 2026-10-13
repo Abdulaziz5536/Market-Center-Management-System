@@ -1746,6 +1746,7 @@ body{
  */
 
 @media (max-width: 768px) {
+
   
   .mobile-menu-button {
     display: flex;
@@ -1774,13 +1775,14 @@ body{
     outline-offset: 3px;
   }
 
+
+
   
   .sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
-
     width: min(280px, 85vw);
     height: 100vh;
     height: 100dvh;
@@ -1804,6 +1806,7 @@ body{
   .sidebar.sidebar-open {
     transform: translateX(0);
     visibility: visible;
+    padding-right: 0;
   }
 
   .sidebar-brand {
@@ -1851,8 +1854,9 @@ body{
   }
 
   .sidebar-logout {
-    width: 100%;
-    margin-left: 5.5px;
+    width: 270px;
+    margin-left: 5px;
+    margin-top: 10px;
     justify-content: flex-start;
   }
 
@@ -2018,6 +2022,51 @@ body{
     transition: none;
   }
 }
+
+
+
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-selector label {
+  font-size: 14px;
+  color: #475569;
+  display: flex;
+  
+  
+}
+
+.language-selector select {
+  padding: 0px 12px;
+  padding-left: 31px;
+  border: 1px solid #dce3eb;
+  border-radius: 8px;
+  background: white;
+  color: #172033;
+  font: inherit;
+  cursor: pointer;
+  font-size: 15px;
+  width: 200px;
+  height: 28px;
+  
+  
+}
+
+#app-language{
+    width: 270px;
+    margin-left: 5px;
+  }
+
+@media (max-width: 768px) {
+  .language-selector {
+    flex-wrap: wrap;
+  }
+}
+
+
 
 
 
