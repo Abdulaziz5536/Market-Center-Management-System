@@ -216,7 +216,7 @@ const filteredTenants = useMemo(() => {
                   <input id="phone" type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="Enter phone number" required />
                 </div>
                 <div className="unit-field">
-                  <label htmlFor="email">Email`(optional)`</label>
+                  <label htmlFor="email">Email (optional)</label>
                   <input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Enter email address" />
                 </div>
                 <div className="unit-field">
@@ -267,9 +267,9 @@ const filteredTenants = useMemo(() => {
                     <tr><td colSpan={6} className="no-units">No tenants found</td></tr>
                   ) : filteredTenants.map((tenant) => (
                     <tr key={tenant._id}>
-                      <td>{tenant.tenantName}</td><td>{tenant.phone}</td><td>{tenant.email || "—"}</td>
-                      <td>{typeof tenant.unit === "string" ? tenant.unit : tenant.unit?.unitId || "—"}</td><td>{tenant.moveInDate || "—"}</td>
-                      <td><div className="unit-actions"> {admin && (<button className="edit-button" onClick={() => handleEdit(tenant)}>Edit</button> )} {admin && (<button className="delete-button" onClick={() => void handleDelete(tenant._id)}>Delete</button> )}</div></td> 
+                      <td style={{fontSize:18}}>{tenant.tenantName}</td><td style={{fontSize:18}}>{tenant.phone}</td><td style={{fontSize:18}}>{tenant.email || "—"}</td>
+                      <td style={{fontSize:18}}>{typeof tenant.unit === "string" ? tenant.unit : tenant.unit?.unitId || "—"}</td><td style={{fontSize:18}}>{tenant.moveInDate || "—"}</td>
+                      <td style={{fontSize:18}}><div className="unit-actions"> {admin && (<button className="edit-button" onClick={() => handleEdit(tenant)}>Edit</button> )} {admin && (<button className="delete-button" onClick={() => void handleDelete(tenant._id)}>Delete</button> )}</div></td> 
                     </tr>
                   ))}
                 </tbody>

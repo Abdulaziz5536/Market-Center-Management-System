@@ -726,7 +726,7 @@ const Announcements = () => {
                           }
                         >
                          
-                          <td>
+                          <td style={{fontSize:18}}>
                             <strong>
                               {
                                 announcement.title
@@ -742,7 +742,7 @@ const Announcements = () => {
 
                           
                           <td>
-                            <span className="contract-status">
+                            <span style={{fontSize:18}} className="contract-status">
                               {
                                 announcement.announcementType
                               }
@@ -750,14 +750,14 @@ const Announcements = () => {
                           </td>
 
                           
-                          <td>
+                          <td style={{fontSize:18}}>
                             {
                               announcement.audience
                             }
                           </td>
 
                           
-                          <td>
+                          <td style={{fontSize:18}}>
                             {announcement.audience ===
                             "All Tenants" ? (
                               "All Tenants"
@@ -784,14 +784,14 @@ const Announcements = () => {
                           </td>
 
                           
-                          <td>
+                          <td style={{fontSize:18}}>
                             {new Date(
                               announcement.scheduledDate
                             ).toLocaleString()}
                           </td>
 
                           
-                          <td>
+                          <td style={{fontSize:18}}>
                             {
                               announcement.deliveryType
                             }

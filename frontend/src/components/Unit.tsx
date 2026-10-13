@@ -425,19 +425,19 @@ const Units = () => {
 
                       <tr key={unit._id}>
 
-                        <td>
+                        <td style={{fontSize:18}}>
                           {unit.unitId}
                         </td>
 
-                        <td>
+                        <td style={{fontSize:18}}>
                           {unit.area}
                         </td>
 
-                        <td>
+                        <td style={{fontSize:18}}>
                           {unit.type}
                         </td>
 
-                        <td>
+                        <td style={{fontSize:18}}>
                           {unit.monthlyRent}
                         </td>
 
