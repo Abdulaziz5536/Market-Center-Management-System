@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar";
 import { isAdmin } from "../utils/auth";
 import { apiFetch } from "../api";
 import "../styles.css";
+import Footer from "../Footer";
 
 type Unit = { _id: string; unitId: string };
 type ReceiptFile = { name: string; type: string; data: string };
@@ -152,6 +153,7 @@ const Utilities = () => {
         <td><div className="unit-actions"> {admin && (<button className="edit-button" onClick={() => handleEdit(utility)}>Edit</button> )} {admin && (<button className="delete-button" onClick={() => void handleDelete(utility._id)}>Delete</button> )}</div></td></tr>)}
       </tbody></table></div>
     </section>
+    <Footer />
   </div></main></div>;
 };
 

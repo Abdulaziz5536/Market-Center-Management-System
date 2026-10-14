@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "
 import Sidebar from "../Sidebar";
 import { isAdmin } from "../utils/auth";
 import { apiFetch } from "../api";
+import Footer from "../Footer";
 import "../styles.css";
 
 type Tenant = { _id: string; tenantName: string; phone: string };
@@ -228,6 +229,7 @@ const Contracts = () => {
               </table>
             </div>
           </section>
+          <Footer />
         </div>
       </main>
     </div>

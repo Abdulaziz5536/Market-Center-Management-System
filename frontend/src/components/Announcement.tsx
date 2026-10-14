@@ -3,6 +3,7 @@ import type { FormEvent } from "react";
 import Sidebar from "../Sidebar";
 import {isAdmin} from "../utils/auth";
 import { apiFetch } from "../api";
+import Footer from "../Footer";
 import "../styles.css";
 
 type Tenant = {
@@ -833,6 +834,7 @@ const Announcements = () => {
               </table>
             </div>
           </div>
+          <Footer />
         </div>
       </main>
     </div>

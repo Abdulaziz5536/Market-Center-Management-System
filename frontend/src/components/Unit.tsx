@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar";
 import {isAdmin} from "../utils/auth";
 import { apiFetch } from "../api";
 import "../styles.css";
+import Footer from "../Footer";
 
 const Units = () => {
   const [units, setUnits] = useState([]);
@@ -494,7 +495,7 @@ const Units = () => {
             </div>
 
           </section>
-
+        <Footer />
         </div>
 
       </main>

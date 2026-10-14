@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../Sidebar";
 import { apiFetch } from "../api";
+import Footer from "../Footer";
 import "../styles.css";
 
 
@@ -120,6 +121,7 @@ const Dashboard = () => {
               {outstandingUtilities.length === 0 ? <p className="dashboard-empty">No outstanding utility bills.</p> : <div className="dashboard-list">{outstandingUtilities.map((utility) => <div className="dashboard-list-row" key={utility._id}><div><strong>{utility.utilityType} — {unitName(utility.unit)}</strong><small>Due {utility.dueDate}</small></div><div className="dashboard-row-value"><strong>Br {utility.amount.toLocaleString()}</strong><span className={`contract-status ${utility.status.toLowerCase()}`}>{utility.status}</span></div></div>)}</div>}
             </article>
           </section>
+          <Footer />
         </div>
       </main>
     </div>

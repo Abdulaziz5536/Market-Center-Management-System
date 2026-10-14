@@ -2,6 +2,7 @@ import { useMemo, useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import { isAdmin } from "../utils/auth";
 import { apiFetch } from "../api";
+import Footer from "../Footer";
 import "../styles.css";
 
 
@@ -276,6 +277,7 @@ const filteredTenants = useMemo(() => {
               </table>
             </div>
           </section>
+          <Footer />
         </div>
       </main>
     </div>

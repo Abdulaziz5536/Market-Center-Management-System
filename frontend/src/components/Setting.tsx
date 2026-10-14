@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import { apiFetch } from "../api";
+import Footer from "../Footer";
 import "../styles.css";
 
 type AccessLevel = "admin" | "readonly";
@@ -447,8 +448,11 @@ const Setting = () => {
                 </table>
               </div>
             )}
+            
           </div>
         </section>
+        <Footer />
+        
       </main>
     </div>
   );

@@ -804,6 +804,7 @@ body{
 .page-content {
   flex: 1;
   padding: 40px;
+  padding-bottom: 20px;
   box-sizing: border-box;
 }
 
@@ -1750,7 +1751,6 @@ body{
 
 @media (max-width: 768px) {
 
- 
 
   
   .mobile-menu-button {
@@ -2076,6 +2076,39 @@ body{
     flex-wrap: wrap;
   }
 }
+
+/* footer */
+
+.app-footer {
+  margin-top: auto;
+  padding: 18px 24px;
+  text-align: center;
+  color: #777;
+  font-size: 13px;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.app-footer p {
+  margin: 0 0 5px;
+}
+
+.app-footer span {
+  font-size: 12px;
+  color: #999;
+}
+
+.app-layout {
+  min-height: 100vh;
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
 
 
 
