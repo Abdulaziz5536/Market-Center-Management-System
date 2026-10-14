@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user-model";
+import { validateEmailDomain } from "../utils/validateEmail.js";
 
 
 export const getRegister = async (
@@ -9,6 +10,7 @@ export const getRegister = async (
   res: Response
 ) => {
   try {
+
     const users = await User.find().select("-password");
 
     return res.status(200).json({
@@ -40,6 +42,14 @@ export const register = async (
           "Name, email, and password are required",
       });
     }
+
+    const emailExists = await validateEmailDomain(email);
+
+        if (!emailExists) {
+          return res.status(400).json({
+           message: "Invalid email.",
+  });
+}
 
     
     const existingUser = await User.findOne({

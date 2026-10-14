@@ -67,7 +67,7 @@ const Register = () => {
 
           <h1 style={{display:"flex",justifyContent:"center"}}>Create Account</h1>
 
-          <p>
+          <p style={{display:"flex",justifyContent:"center"}}>
             Create your management system account
           </p>
         </div>
