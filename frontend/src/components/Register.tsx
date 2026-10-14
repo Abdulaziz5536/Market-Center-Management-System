@@ -1,7 +1,7 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles.css";
+
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -63,7 +63,7 @@ const Register = () => {
       <div className="auth-card register-card">
 
         <div className="auth-header">
-          
+  
 
           <h1 style={{display:"flex",justifyContent:"center"}}>Create Account</h1>
 

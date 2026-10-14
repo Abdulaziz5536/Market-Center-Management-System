@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles.css";
-import LanguageSelector from "../LanguageSelector";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +11,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,15 +62,16 @@ const Login = () => {
   };
 
   return (
+    
     <div className="auth-page">
+
+      
       <div className="auth-card">
 
-        <div style={{marginBottom:100,marginLeft:500}}>
-            <LanguageSelector />
-        </div>
-        
 
         <div className="auth-header">
+
+        
           
           <h1 style={{display:"flex",justifyContent:"center"}}>Login</h1>
 

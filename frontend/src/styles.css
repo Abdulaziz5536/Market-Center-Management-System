@@ -14,7 +14,6 @@ body{
 
 
 
-
 .auth-page {
   min-height: 100vh;
   width: 100%;
@@ -22,6 +21,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  
 
   padding: 25px;
   box-sizing: border-box;
@@ -47,6 +47,7 @@ body{
   border: 1px solid #e9edf3;
 
   box-shadow: 0 8px 30px rgba(40, 55, 75, 0.07);
+  
 }
 
 
@@ -1728,6 +1729,8 @@ body{
 }
 
 
+
+
 /*
    MOBILE NAVIGATION
  */
@@ -1746,6 +1749,8 @@ body{
  */
 
 @media (max-width: 768px) {
+
+ 
 
   
   .mobile-menu-button {
@@ -2016,6 +2021,7 @@ body{
   }
 }
 
+
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .sidebar {
@@ -2055,10 +2061,15 @@ body{
   
 }
 
+
 #app-language{
     width: 270px;
     margin-left: 5px;
   }
+
+  
+
+
 
 @media (max-width: 768px) {
   .language-selector {

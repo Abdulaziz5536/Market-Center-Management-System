@@ -1,12 +1,14 @@
+
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { isAdmin } from "./utils/auth";
 import LanguageSelector from "./LanguageSelector";
-
 
 const Sidebar = () => {
   const admin = isAdmin();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const closeMenu = () => setMenuOpen(false);
@@ -21,6 +23,7 @@ const Sidebar = () => {
     };
 
     document.addEventListener("keydown", handleKeyDown);
+
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
@@ -38,11 +41,14 @@ const Sidebar = () => {
 
   return (
     <>
-    
       <button
         type="button"
         className="mobile-menu-button"
-        aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-label={
+          menuOpen
+            ? "Close navigation menu"
+            : "Open navigation menu"
+        }
         aria-expanded={menuOpen}
         onClick={() => setMenuOpen((open) => !open)}
       >
@@ -64,33 +70,49 @@ const Sidebar = () => {
           className="sidebar-brand"
           onClick={closeMenu}
         >
-          <h2>Market Center</h2>
-
+          <h2>{t("appName")}</h2>
         </NavLink>
-
-        
 
         <nav className="sidebar-nav">
           <div className="sidebar-main-links">
-            <NavLink to="/dashboard" className={linkClass} onClick={closeMenu}>
-              Dashboard
+            <NavLink
+              to="/dashboard"
+              className={linkClass}
+              onClick={closeMenu}
+            >
+              {t("navigation.dashboard")}
             </NavLink>
 
-
-            <NavLink to="/units" className={linkClass} onClick={closeMenu}>
-              Units
+            <NavLink
+              to="/units"
+              className={linkClass}
+              onClick={closeMenu}
+            >
+              {t("navigation.units")}
             </NavLink>
 
-            <NavLink to="/tenants" className={linkClass} onClick={closeMenu}>
-              Tenants
+            <NavLink
+              to="/tenants"
+              className={linkClass}
+              onClick={closeMenu}
+            >
+              {t("navigation.tenants")}
             </NavLink>
 
-            <NavLink to="/contracts" className={linkClass} onClick={closeMenu}>
-              Contracts
+            <NavLink
+              to="/contracts"
+              className={linkClass}
+              onClick={closeMenu}
+            >
+              {t("navigation.contracts")}
             </NavLink>
 
-            <NavLink to="/utilities" className={linkClass} onClick={closeMenu}>
-              Utilities
+            <NavLink
+              to="/utilities"
+              className={linkClass}
+              onClick={closeMenu}
+            >
+              {t("navigation.utilities")}
             </NavLink>
 
             <NavLink
@@ -98,7 +120,7 @@ const Sidebar = () => {
               className={linkClass}
               onClick={closeMenu}
             >
-              Announcements
+              {t("navigation.announcements")}
             </NavLink>
 
             {admin && (
@@ -107,22 +129,21 @@ const Sidebar = () => {
                 className={linkClass}
                 onClick={closeMenu}
               >
-                Settings
+                {t("navigation.settings")}
               </NavLink>
             )}
           </div>
 
-          
-
           <div className="sidebar-bottom-links">
             <LanguageSelector />
+
             <button
               type="button"
               className="sidebar-logout"
               onClick={handleLogout}
             >
               <span className="logout-icon">↪</span>
-              Log out
+              {t("navigation.logout")}
             </button>
           </div>
         </nav>
