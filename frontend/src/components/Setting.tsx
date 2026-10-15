@@ -113,7 +113,7 @@ const Setting = () => {
         payload.password = password;
       }
 
-      const response = await fetch(
+      const response = await apiFetch(
         isEditing
           ? `${API_URL}/${editingUser!._id}`
           : `${API_URL}/register`,

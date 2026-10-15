@@ -1,7 +1,7 @@
 
 import { Router } from "express";
 
-import { register, login, getRegister } from "../controllers/user-controller";
+import { register, login, getRegister, updateUser, deleteUser } from "../controllers/user-controller";
 
 import {
   protect,
@@ -16,7 +16,7 @@ router.post("/login", login);
 
 router.get("/", protect, adminOnly, getRegister);
 router.post("/register", protect, adminOnly, register);
-router.put("/:id", protect, adminOnly);
-router.delete("/:id", protect, adminOnly);
+router.put("/:id", protect, adminOnly, updateUser);
+router.delete("/:id", protect, adminOnly, deleteUser);
 
 export default router;
