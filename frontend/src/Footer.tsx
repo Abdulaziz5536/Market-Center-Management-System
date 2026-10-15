@@ -3,7 +3,7 @@ import { WiWindy } from "react-icons/wi";
 
 const Footer = () => {
 
-  const [responseTime,setResponseTime] = useState(null);
+  const [responseTime,setResponseTime] = useState<string | null>(null);
   const [apiStatus, setApiStatus] = useState("Checking API");
   const today = new Date();
   const formattedDate = new Intl.DateTimeFormat("en-GB").format(today);
@@ -27,11 +27,13 @@ const Footer = () => {
 
         setResponseTime((end - start).toFixed(2));
         setApiStatus("API online");
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setApiStatus("API unavailable");
-        }
       }
+     catch (error: unknown) {
+        if (error instanceof Error && error.name !== "AbortError") {
+           setApiStatus("API unavailable");
+       }
+    }
+
     }
 
     checkApiSpeed();

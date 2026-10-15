@@ -5,8 +5,17 @@ import { apiFetch } from "../api";
 import "../styles.css";
 import Footer from "../Footer";
 
+interface Unit {
+  _id: string;
+  unitId: string;
+  area: string;
+  type: string;
+  monthlyRent: string;
+  status: "Available" | "Not Available";
+}
+
 const Units = () => {
-  const [units, setUnits] = useState([]);
+  const [units, setUnits] = useState<Unit[]>([]);
 
   const [unitId, setUnitId] = useState("");
   const [area, setArea] = useState("");
@@ -16,7 +25,7 @@ const Units = () => {
   const [search, setSearch] = useState("");
 
   const [message, setMessage] = useState("");
-  const [editingId, setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const admin = isAdmin();
 
@@ -46,7 +55,7 @@ const Units = () => {
   }, []);
 
   
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const unitData = {
@@ -106,7 +115,7 @@ const Units = () => {
   };
 
  
-  const handleEdit = (unit) => {
+  const handleEdit = (unit: Unit) => {
     setEditingId(unit._id);
 
     setUnitId(unit.unitId);
@@ -123,7 +132,7 @@ const Units = () => {
   };
 
   
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: String) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this unit?"
     );
