@@ -15,7 +15,7 @@ const app = express();
 app.use(cors({
     origin: [
       "http://localhost:5173",
-      "https://market-center-management-system-yhul-ohl414odt.vercel.app",
+      "https://market-center-management-system.vercel.app",
     ],
   }));
 
