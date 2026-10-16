@@ -1821,11 +1821,11 @@ body{
 
   .sidebar-brand h2 {
     margin-left: 0px;
-    font-size: 25px;
+    font-size: 30px;
     white-space: normal;
     font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
-  
+
   .sidebar-nav {
     gap: 16px;
   }
