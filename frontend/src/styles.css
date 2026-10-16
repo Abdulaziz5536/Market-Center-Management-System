@@ -1823,9 +1823,9 @@ body{
     margin-left: 0px;
     font-size: 25px;
     white-space: normal;
-    font-family: fantasy;
+    font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
-
+  
   .sidebar-nav {
     gap: 16px;
   }
