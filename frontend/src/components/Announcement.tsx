@@ -6,6 +6,8 @@ import { apiFetch } from "../api";
 import Footer from "../Footer";
 import "../styles.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 type Tenant = {
   _id: string;
   tenantName: string;
@@ -198,8 +200,8 @@ const Announcements = () => {
 
     try {
       const url = editingId
-        ? `http://localhost:5000/announcements/${editingId}`
-        : "http://localhost:5000/announcements";
+        ? `${API_URL}/${editingId}`
+        : `${API_URL}/announcements`;
 
       const response = await fetch(url, {
         method: editingId ? "PUT" : "POST",
@@ -317,7 +319,7 @@ const Announcements = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/announcement/${id}`,
+        `${API_URL}/${id}`,
         {
           method: "DELETE",
         }

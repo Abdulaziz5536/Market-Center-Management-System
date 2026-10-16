@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +23,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/auth/login",
+        `${API_URL}/auth/login`,
         {
           method: "POST",
           headers: {
